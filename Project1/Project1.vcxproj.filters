@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="资源文件\hello_triangle">
+      <UniqueIdentifier>{a1a8348c-ddc6-4f16-ae5a-6bff2b2621de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\shader">
+      <UniqueIdentifier>{13e8bf95-8821-4b30-92dd-2994e0d99b6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\texture">
+      <UniqueIdentifier>{b41ab8e1-964c-47df-94bf-45eb33834c2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\shader_mgr">
+      <UniqueIdentifier>{8cc711e2-0ce3-4517-bc92-7328c1ce3906}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\shader_res">
+      <UniqueIdentifier>{65657477-7f6f-4d8c-9afb-b8f4590e3b37}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Desktop\glfwproject\src\glad.c">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="triangle.cpp">
+      <Filter>资源文件\hello_triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="tri_test_1.cpp">
+      <Filter>资源文件\hello_triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="tri_test2.cpp">
+      <Filter>资源文件\hello_triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="my_triangle.cpp">
+      <Filter>资源文件\hello_triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="my_texture.cpp">
+      <Filter>资源文件\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="my_texture_unit.cpp">
+      <Filter>资源文件\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="texture_re.cpp">
+      <Filter>资源文件\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="shader_s.cpp">
+      <Filter>资源文件\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>资源文件\shader_mgr</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Shader.h">
+      <Filter>资源文件\shader_mgr</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sample_vertex.vs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="sample_frag.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+  </ItemGroup>
+</Project>
