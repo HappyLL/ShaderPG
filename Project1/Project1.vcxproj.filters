@@ -28,6 +28,9 @@
     <Filter Include="资源文件\shader_res">
       <UniqueIdentifier>{65657477-7f6f-4d8c-9afb-b8f4590e3b37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\transform">
+      <UniqueIdentifier>{626e59aa-121e-46dc-9a2a-1508458e97fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>资源文件\shader_mgr</Filter>
+    </ClCompile>
+    <ClCompile Include="transform.cpp">
+      <Filter>资源文件\transform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

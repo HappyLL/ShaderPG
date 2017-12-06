@@ -1,5 +1,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "glm\glm.hpp"
+#include "glm\gtc\matrix_transform.hpp"
+#include "glm\gtc\\type_ptr.hpp"
 #include <iostream>
 #include "Shader.h"
 
@@ -130,7 +133,7 @@ void main() {
 	glLinkProgram(glProgram);
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);*/
-
+	glm::mat4 mat;
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	//‘ˆº”‰÷»æ—≠ª∑
