@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 //glfw 是opengl的几个流行库中的一个
 #include <glfw/glfw3.h>
+#include "Shader.h"
 
 const int w_width = 800;
 const int w_height = 600;
@@ -20,6 +21,7 @@ void input_process(GLFWwindow *window) {
 
 int main() {
 	//step.1 建立一个简单的渲染循环
+	//step.2 画一个简单的三角形
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -35,12 +37,29 @@ int main() {
 		glfwTerminate();
 		return -1;
 	}
-
 	glfwSetFramebufferSizeCallback(window, windows_size_chg);
-	//glfwSetKeyCallback(window, key_call_back);
+	float vertex[] = {
+		0.0, 0.5, 0,
+		-0.5, 0, 0,
+		0.5, 0, 0,
+	};
+	unsigned int VAO;
+	glGenVertexArrays(1, &VAO);
+	unsigned int VBO;
+	glGenBuffers(1, &VBO);
+	//顶点数组绑定到GL_ARRAY_BUFFER 操作的是GL_ARRAY_BUFFER
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex), 0, GL_STATIC_DRAW);
+	//glvertexa...link:https://learnopengl-cn.github.io/01%20Getting%20started/04%20Hello%20Triangle/
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+	glEnableVertexAttribArray(0);
+	shader = Shader();
+	
 	while (!glfwWindowShouldClose(window)) {
 		input_process(window);
 		//渲染指令
+		glClearColor(0.5, 0.1, 0.5, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
 		//双缓冲
 		glfwSwapBuffers(window);
 		//io
