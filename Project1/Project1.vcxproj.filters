@@ -82,5 +82,11 @@
     <None Include="sample_frag.fs">
       <Filter>资源文件\shader_res</Filter>
     </None>
+    <None Include="transform.vs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="transform.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -11,20 +11,20 @@ Shader::Shader(const char * vs, const char * fs)
 	const char *code = this->vs_code.c_str();
 	glShaderSource(vertex_shader, 1, &code, NULL);
 	glCompileShader(vertex_shader);
-	this->check_shader(vertex_shader, GL_COMPILE_STATUS);
+	this->check_shader_compile(vertex_shader, GL_COMPILE_STATUS);
 	//构造片段着色器
 	unsigned int frage_shader;
 	frage_shader = glCreateShader(GL_FRAGMENT_SHADER);
 	code = this->fs_code.c_str();
 	glShaderSource(frage_shader, 1, &code, NULL);
 	glCompileShader(frage_shader);
-	this->check_shader(frage_shader, GL_COMPILE_STATUS);
+	this->check_shader_compile(frage_shader, GL_COMPILE_STATUS);
 	//构造着色器程序
 	this->gl_program = glCreateProgram();
 	glAttachShader(this->gl_program, vertex_shader);
 	glAttachShader(this->gl_program, frage_shader);
 	glLinkProgram(this->gl_program);
-	this->check_shader(this->gl_program, GL_LINK_STATUS);
+	this->check_shader_link(this->gl_program, GL_LINK_STATUS);
 	glDeleteShader(vertex_shader);
 	glDeleteShader(frage_shader);
 }
@@ -51,21 +51,37 @@ void Shader::read_shader(const char * shader_path, std::string & code)
 	stream.seekg(0, std::ios::end);
 	long tot_bytes = stream.tellg();
 	stream.seekg(0, std::ios::beg);
-	char * buff = new char[tot_bytes];
+	char * buff = new char[tot_bytes + 1];
+	// 初始化时需要全部为0 不然会出现中文乱码
+	memset(buff, 0, tot_bytes + 1);
 	stream.read(buff, tot_bytes);
 	code = buff;
 	delete[]buff;
 	stream.close();
-	std::cout << "read_shader is " << code << std::endl;
+	//std::cout << "read_shader is " << code << std::endl;
 }
 
-void Shader::check_shader(unsigned int shader, GLenum status)
+void Shader::check_shader_link(unsigned int shader, GLenum status)
 {
 	GLint success;
 	glGetProgramiv(shader, status, &success);
-	//返回0表示编译不成功
+	//返回0表示不成功
 	if (success == 0) {
 		char info[512];
+		memset(info, 0, 512);
+		glGetProgramInfoLog(shader, 512, NULL, info);
+		std::cout << info << std::endl;
+	}
+}
+
+void Shader::check_shader_compile(unsigned int shader, GLenum status)
+{
+	GLint success;
+	glGetShaderiv(shader, status, &success);
+	//返回0表示不成功
+	if (success == 0) {
+		char info[512];
+		memset(info, 0, 512);
 		glGetShaderInfoLog(shader, 512, NULL, info);
 		std::cout << info << std::endl;
 	}

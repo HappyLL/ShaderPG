@@ -12,7 +12,8 @@ public:
 	void set_uniform1f(const char *name, double value);
 private:
 	void read_shader(const char *shader_path, std::string &code);
-	void check_shader(unsigned int shader, GLenum status);
+	void check_shader_link(unsigned int shader, GLenum status);
+	void check_shader_compile(unsigned int shader, GLenum status);
 private:
 	std::string vs_code, fs_code;
 	GLuint gl_program;
