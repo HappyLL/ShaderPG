@@ -1,10 +1,14 @@
 //复习一下简单的纹理
 #include <iostream>
+#include <string>
 //glad 是用于纠正显卡驱动不同导致函数地址不同
 #include <glad/glad.h>
 //glfw 是opengl的几个流行库中的一个
 #include <glfw/glfw3.h>
 #include "Shader.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 const int w_width = 800;
 const int w_height = 600;
@@ -17,6 +21,14 @@ void input_process(GLFWwindow *window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
+}
+
+void load_texture(const char *pth, std::string& image_buff,int &width, int &height, int& channel) {
+	char * buff = (char *)stbi_load(pth, &width, &height, &channel, 0);
+	if (buff == NULL) {
+		return;
+	}
+	image_buff = buff;
 }
 
 int main() {
@@ -40,9 +52,9 @@ int main() {
 	}
 	glfwSetFramebufferSizeCallback(window, windows_size_chg);
 	float vertex[] = {
-		0.0, 0.5, 0,
-		-0.5, -0.5, 0,
-		0.5, -0.5, 0,
+		0.0, 0.5, 0, 0 , 0,
+		-0.5, -0.5, 0, 0.5, 1,
+		0.5, -0.5, 0, 1, 0,
 	};
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
@@ -56,6 +68,19 @@ int main() {
 	//glvertexa...link:https://learnopengl-cn.github.io/01%20Getting%20started/04%20Hello%20Triangle/
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
 	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//增加纹理
+	unsigned int textures;
+	glGenTextures(1, &textures);
+	std::string image_buff_data = "";
+	int image_height, image_width, image_channel;
+	load_texture("111.png", image_buff_data, image_width, image_height, image_channel);
+	if (image_buff_data.length() > 0) {
+		glBufferData(GL_TEXTURE, image_buff_data.length(), image_buff_data.c_str(), GL_STATIC_DRAW);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(2 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+	}
+	
 	Shader shader = Shader("transform.vs", "transform.fs");
 	
 	while (!glfwWindowShouldClose(window)) {
@@ -65,7 +90,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 		glBindVertexArray(VAO);
 		shader.use_program();
-		// 上述着色器去掉 也是能画出三角形
+		// 上述着色器去掉 也是能画出三角形（着色器默认）
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		//双缓冲
 		glfwSwapBuffers(window);
