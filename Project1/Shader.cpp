@@ -45,6 +45,12 @@ void Shader::set_uniform1f(const char * name, double value)
 	glUniform1f(this->gl_program, value);
 }
 
+void Shader::set_uniform1i(const char * name, int value)
+{
+	GLuint un_location = glGetUniformLocation(this->gl_program, name);
+	glUniform1i(this->gl_program, value);
+}
+
 void Shader::read_shader(const char * shader_path, std::string & code)
 {
 	std::ifstream stream = std::ifstream(shader_path, std::ios::in);

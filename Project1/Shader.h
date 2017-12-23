@@ -10,6 +10,7 @@ public:
 	~Shader();
 	void use_program();
 	void set_uniform1f(const char *name, double value);
+	void set_uniform1i(const char *name, int value);
 private:
 	void read_shader(const char *shader_path, std::string &code);
 	void check_shader_link(unsigned int shader, GLenum status);

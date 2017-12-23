@@ -15,6 +15,7 @@ const int w_height = 600;
 
 void windows_size_chg(GLFWwindow *window, int width, int height) {
 	glfwSetWindowSize(window, width, height);
+	glViewport(0, 0, width, height);
 }
 
 void input_process(GLFWwindow *window) {
@@ -35,6 +36,7 @@ int main() {
 	//step.1 建立一个简单的渲染循环
 	//step.2 画一个简单的三角形
 	//step.3 添加纹理
+	//step.4 坐标空间
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -51,9 +53,11 @@ int main() {
 		return -1;
 	}
 	glfwSetFramebufferSizeCallback(window, windows_size_chg);
+	//视口坐标
+	glViewport(0, 0, w_width, w_height);
 	float vertex[] = {
-		0.0, 0.5, 0, 0 , 0,
-		-0.5, -0.5, 0, 0.5, 1,
+		0.0, 0.5, 0, 0.5 , 1,
+		-0.5, -0.5, 0, 0, 0,
 		0.5, -0.5, 0, 1, 0,
 	};
 	unsigned int VAO;
@@ -66,19 +70,35 @@ int main() {
 	//第三个字段表示数据开始的指针
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex), vertex, GL_STATIC_DRAW);
 	//glvertexa...link:https://learnopengl-cn.github.io/01%20Getting%20started/04%20Hello%20Triangle/
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
 	glEnableVertexAttribArray(0);
+	// 将顶点缓冲区的状态绑定到VAO时该顶点缓冲区必须要在绑定状态(否则会有崩溃)
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	//增加纹理
 	unsigned int textures;
+	// 绑定前先激活要绑定的纹理单元
+	//glActiveTexture(,);
 	glGenTextures(1, &textures);
-	std::string image_buff_data = "";
+	glBindTexture(GL_TEXTURE_2D, textures);
+	// 设置纹理的缠绕方式(s,t)相当于(x, y)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	int image_height, image_width, image_channel;
-	load_texture("111.png", image_buff_data, image_width, image_height, image_channel);
-	if (image_buff_data.length() > 0) {
-		glBufferData(GL_TEXTURE, image_buff_data.length(), image_buff_data.c_str(), GL_STATIC_DRAW);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(2 * sizeof(float)));
-		glEnableVertexAttribArray(1);
+	unsigned char * buff = stbi_load("container.jpg", &image_width, &image_height, &image_channel, 0);
+	// png是有alpha通道 jpg 没有
+	// png的glformat的图片必须是GL_RGBA
+	if (buff) {
+		//参数详见:https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image_width, image_height, 0, GL_RGB, GL_UNSIGNED_BYTE, buff);
+		stbi_image_free(buff);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else {
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 	
 	Shader shader = Shader("transform.vs", "transform.fs");
@@ -88,9 +108,10 @@ int main() {
 		//渲染指令
 		glClearColor(0.5, 0.5, 0.5, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
-		glBindVertexArray(VAO);
 		shader.use_program();
-		// 上述着色器去掉 也是能画出三角形（着色器默认）
+		glBindVertexArray(VAO);
+		// 注意顶点着色器每次都会以一个单独的顶点作为输入
+		// 该顶点包含的数据叫做顶点属性(如上述 为顶点的xyz和对应的纹理坐标)
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		//双缓冲
 		glfwSwapBuffers(window);
