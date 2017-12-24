@@ -51,6 +51,18 @@ void Shader::set_uniform1i(const char * name, int value)
 	glUniform1i(this->gl_program, value);
 }
 
+void Shader::set_uniform_matrix_4fv(const char * name, glm::mat4 & mat)
+{
+	GLuint un_location = glGetUniformLocation(this->gl_program, name);
+	glUniformMatrix4fv(un_location, 1, GL_FALSE, glm::value_ptr(mat));
+}
+
+GLuint Shader::get_uniform_location(const char * name)
+{
+	GLuint un_location = glGetUniformLocation(this->gl_program, name);
+	return un_location;
+}
+
 void Shader::read_shader(const char * shader_path, std::string & code)
 {
 	std::ifstream stream = std::ifstream(shader_path, std::ios::in);

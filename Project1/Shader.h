@@ -4,6 +4,9 @@
 #include <fstream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "glm/glm/glm.hpp"
+#include "glm/glm/gtc/matrix_transform.hpp"
+#include "glm/glm/gtc/type_ptr.hpp"
 class Shader {
 public:
 	Shader(const char *vs, const char *fs);
@@ -11,6 +14,8 @@ public:
 	void use_program();
 	void set_uniform1f(const char *name, double value);
 	void set_uniform1i(const char *name, int value);
+	void set_uniform_matrix_4fv(const char *name, glm::mat4 &mat);
+	GLuint get_uniform_location(const char *name);
 private:
 	void read_shader(const char *shader_path, std::string &code);
 	void check_shader_link(unsigned int shader, GLenum status);

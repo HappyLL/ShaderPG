@@ -18,9 +18,29 @@ void windows_size_chg(GLFWwindow *window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
+glm::vec3 camera_pos = glm::vec3(0.0f, 0.0f, 3.0f);
+
 void input_process(GLFWwindow *window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
+		return;
+	}
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		printf("asdasdad");
+		camera_pos.y -= 0.01;
+		return;
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		camera_pos.y += 0.01;
+		return;
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+		camera_pos.x -= 0.01;
+		return;
+	}
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+		camera_pos.x += 0.01;
+		return;
 	}
 }
 
@@ -54,11 +74,49 @@ int main() {
 	}
 	glfwSetFramebufferSizeCallback(window, windows_size_chg);
 	//视口坐标
-	glViewport(0, 0, w_width, w_height);
+	//glViewport(0, 0, w_width, w_height);
 	float vertex[] = {
-		0.0, 0.5, 0, 0.5 , 1,
-		-0.5, -0.5, 0, 0, 0,
-		0.5, -0.5, 0, 1, 0,
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+		0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 	unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
@@ -102,17 +160,62 @@ int main() {
 	}
 	
 	Shader shader = Shader("transform.vs", "transform.fs");
-	
+	shader.use_program();
+	glm::mat4 model;
+	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	glm::mat4 view;
+	//look at 矩阵 需要位置(摄像机位置) 目标(确定摄像机z轴方向 为摄像机方向 - 目标方向) 和 上向量(用来与z轴叉乘来确定x轴方向)
+	// 可以以左手坐标系去理解(叉乘满足右手)
+	view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
+		glm::vec3(0.0, 0.0, 0.0),
+		glm::vec3(0.0, 1.0, 0.0));
+	glm::mat4 projection;
+	float ratio = float(w_width * 1.0 / w_height);
+	projection = glm::perspective(glm::radians(45.0f), ratio, 0.1f, 100.0f);
+	shader.set_uniform_matrix_4fv("model", model);
+	shader.set_uniform_matrix_4fv("view", view);
+	shader.set_uniform_matrix_4fv("projection", projection);
+
+	glm::vec3 cubePositions[] = {
+		glm::vec3(0.0f,  0.0f,  0.0f),
+		glm::vec3(2.0f,  5.0f, -15.0f),
+		glm::vec3(-1.5f, -2.2f, -2.5f),
+		glm::vec3(-3.8f, -2.0f, -12.3f),
+		glm::vec3(2.4f, -0.4f, -3.5f),
+		glm::vec3(-1.7f,  3.0f, -7.5f),
+		glm::vec3(1.3f, -2.0f, -2.5f),
+		glm::vec3(1.5f,  2.0f, -2.5f),
+		glm::vec3(1.5f,  0.2f, -1.5f),
+		glm::vec3(-1.3f,  1.0f, -1.5f)
+	};
+
+	glEnable(GL_DEPTH_TEST);
 	while (!glfwWindowShouldClose(window)) {
 		input_process(window);
 		//渲染指令
 		glClearColor(0.5, 0.5, 0.5, 1);
-		glClear(GL_COLOR_BUFFER_BIT);
-		shader.use_program();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glBindVertexArray(VAO);
-		// 注意顶点着色器每次都会以一个单独的顶点作为输入
-		// 该顶点包含的数据叫做顶点属性(如上述 为顶点的xyz和对应的纹理坐标)
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		for (int index = 0; index < 10; ++index) {
+			glm::mat4 model;
+			glm::mat4 trans;
+			trans = glm::translate(trans, cubePositions[index%10]);
+			if (index % 3 == 0) {
+				model = glm::rotate(trans, float(glm::radians(-55.0) * glfwGetTime()), glm::vec3(0.5f, 1.0f, 0.0f));
+			}
+			else {
+				model = trans;
+			}
+			shader.set_uniform_matrix_4fv("model", model);
+			float radius = 10.0f;
+			glm::mat4 view;
+			view = glm::lookAt(camera_pos, glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+			shader.set_uniform_matrix_4fv("view", view);
+			shader.use_program();
+			// 注意顶点着色器每次都会以一个单独的顶点作为输入
+			// 该顶点包含的数据叫做顶点属性(如上述 为顶点的xyz和对应的纹理坐标)
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
 		//双缓冲
 		glfwSwapBuffers(window);
 		//io
