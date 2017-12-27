@@ -87,7 +87,7 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos) {
 
 	glm::vec3 diretion;
 	diretion.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
-	diretion.y = 0;//sin(glm::radians(pitch));
+	diretion.y = sin(glm::radians(pitch));
 	diretion.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
 	diretion = glm::normalize(diretion);
 	printf("%.3lf %.3lf %.3lf %.3lf\n", pitch, yaw, cos(glm::radians(pitch)) * cos(glm::radians(yaw)), cos(glm::radians(pitch)) * sin(glm::radians(yaw)));
