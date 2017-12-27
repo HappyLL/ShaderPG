@@ -62,35 +62,37 @@ void input_process(GLFWwindow *window) {
 	}*/
 }
 
+void cal_glm_camera(glm::vec3 up, glm::vec3 camera_pos, glm::vec3 target_pos, glm::mat4 &view) {
+	glm::mat4 t;
+	t = glm::translate(t, -camera_pos);
+	glm::vec3 z = camera_pos - target_pos;
+	glm::vec3 nor_z = glm::normalize(z);
+	glm::vec3 nor_x = glm::cross(up, nor_z);
+	nor_x = glm::normalize(nor_x);
+	glm::vec3  nor_y = glm::cross(nor_z, nor_x);
+	nor_y = glm::normalize(nor_y);
+	glm::mat4 r(nor_x.x, nor_x.y, nor_x.z, 0, nor_y.x, nor_y.y, nor_y.z, 0, nor_z.x, nor_z.y, nor_z.z, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+
+	view = r * t;
+}
+
 void mouse_callback(GLFWwindow *window, double xpos, double ypos) {
-	//printf("%.5lf %.5lf\n", xpos, ypos);
-	if (firstMouse) // 这个bool变量初始时是设定为true的
-	{
-		mouse_x = xpos;
-		mouse_y = ypos;
-		firstMouse = false;
-	}
-	double delta_x = xpos - mouse_x;
+	double delta_x = xpos - w_width / 2;
 	// 屏幕右下的顶点时(width, height)
-	double delta_y = mouse_y - ypos;
+	double delta_y = ypos - w_height / 2;
 	mouse_x = xpos;
 	mouse_y = ypos;
 
-	pitch += delta_y * senstive;
-	yaw += delta_x * 0.3;
-	if (pitch >= 89.0) {
-		pitch = 89.0;
-	}
-	else if (pitch <= -89.0) {
-		pitch = -89.0;
-	}
-
+	pitch = delta_y * 90.0 / (w_height / 2);
+	yaw = delta_x * 90 / ( w_width / 2);
+	
 	glm::vec3 diretion;
-	diretion.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+	diretion.x = cos(glm::radians(pitch)) * sin(glm::radians(180 + yaw));
 	diretion.y = sin(glm::radians(pitch));
-	diretion.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+	diretion.z = cos(glm::radians(pitch)) * cos(glm::radians(180 + yaw));
 	diretion = glm::normalize(diretion);
-	printf("%.3lf %.3lf %.3lf %.3lf\n", pitch, yaw, cos(glm::radians(pitch)) * cos(glm::radians(yaw)), cos(glm::radians(pitch)) * sin(glm::radians(yaw)));
+	//printf("%.3lf %.3lf %.3lf %.3lf\n", pitch, yaw, cos(glm::radians(pitch)) * cos(glm::radians(yaw)), cos(glm::radians(pitch)) * sin(glm::radians(yaw)));
+	printf("%.3lf %.3lf\n", delta_x, delta_y);
 	cameraFront = diretion;
 }
 
@@ -210,9 +212,10 @@ int main() {
 	glm::mat4 view;
 	//look at 矩阵 需要位置(摄像机位置) 目标(确定摄像机z轴方向 为摄像机方向 - 目标方向) 和 上向量(用来与z轴叉乘来确定x轴方向)
 	// 可以以左手坐标系去理解(叉乘满足右手)
-	view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
+	/*view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
 		glm::vec3(0.0, 0.0, 0.0),
-		glm::vec3(0.0, 1.0, 0.0));
+		glm::vec3(0.0, 1.0, 0.0));*/
+	cal_glm_camera(glm::vec3(0.0, 1.0, 0.0), camera_pos, glm::vec3(0.0f, 0.0f, 0.0f), view);
 	glm::mat4 projection;
 	float ratio = float(w_width * 1.0 / w_height);
 	projection = glm::perspective(glm::radians(45.0f), ratio, 0.1f, 100.0f);
@@ -243,7 +246,9 @@ int main() {
 		shader.use_program();
 		// 第二个参数表示目标位置
 		// eye direction up
-		view = glm::lookAt(camera_pos, -camera_pos + cameraFront, glm::vec3(0.0, 1.0, 0.0));
+		//view = glm::lookAt(camera_pos, -camera_pos + cameraFront, glm::vec3(0.0, 1.0, 0.0));
+		glm::mat4 view;
+		cal_glm_camera(glm::vec3(0.0, 1.0, 0.0), camera_pos, camera_pos + cameraFront, view);
 		//printf("%.3lf\n", cameraFront.y);
 		shader.set_uniform_matrix_4fv("view", view);
 		for (int index = 0; index < 10; ++index) {
