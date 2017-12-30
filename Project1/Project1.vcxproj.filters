@@ -31,6 +31,9 @@
     <Filter Include="资源文件\transform">
       <UniqueIdentifier>{626e59aa-121e-46dc-9a2a-1508458e97fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\lighting">
+      <UniqueIdentifier>{2e13f759-e9d3-45ad-9833-4a9926cf8af7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -69,6 +72,9 @@
     <ClCompile Include="transform.cpp">
       <Filter>资源文件\transform</Filter>
     </ClCompile>
+    <ClCompile Include="color_light.cpp">
+      <Filter>资源文件\lighting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -86,6 +92,18 @@
       <Filter>资源文件\shader_res</Filter>
     </None>
     <None Include="transform.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="color_light.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="color_light.vs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="color_light_l.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="color_light_l.vs">
       <Filter>资源文件\shader_res</Filter>
     </None>
   </ItemGroup>

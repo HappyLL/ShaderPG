@@ -1,17 +1,25 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include "glm/glm/glm.hpp"
+#include "glm/glm/gtc/matrix_transform.hpp"
+#include "glm/glm/gtc/type_ptr.hpp"
 
 const char * vertexShaderCode = "#version 330 core\n"
 "layout (location = 0) in vec3 pos;\n"
+"out vec3 color;\n"
 "void main(){\n"
 "    gl_Position = vec4(pos.x, pos.y, pos.z, 1);\n"
+"    color = pos * pos;\n"
 "}\0";
 
 const char * fragShaderCode = "#version 330 core\n"
+"in vec3 color;\n"
+"uniform vec3 color_a;\n"
+"uniform vec3 color_b;\n"
 "out vec4 fg_Color;\n"
 "void main(){\n"
-"    fg_Color = vec4(0.5, 0.5, 0.5, 1);\n"
+"    fg_Color = vec4(color_a * color_b, 1);\n"
 "}\0";
 
 void window_size_change(GLFWwindow *window, int width, int height) {
@@ -119,6 +127,11 @@ void main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 		glBindVertexArray(VAO);
 		glUseProgram(glProgram);
+		int u = glGetUniformLocation(glProgram, "color_a");
+		glUniform3f(u, 0.4f, 0.3f, 1.0f);
+		u = glGetUniformLocation(glProgram, "color_b");
+		glm::vec3 g = glm::vec3(1.0, 0.3, 0.2);
+		glUniform3f(u, g.x, g.y, g.z);
 		// 告诉图元我需要画什么
 		//glDrawArrays(GL_TRIANGLES, 0, 3);
 		// 画三角形6个顶点 从索引0开始

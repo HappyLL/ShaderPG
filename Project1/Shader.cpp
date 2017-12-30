@@ -51,6 +51,16 @@ void Shader::set_uniform1i(const char * name, int value)
 	glUniform1i(this->gl_program, value);
 }
 
+void Shader::set_uniformvec3(const char * name, glm::vec3 &value)
+{
+	// 不传引用的bug 会导致传gpu值时(c/s) 可能导致当前数据被销毁 所以必须要用引用
+	int un_location = glGetUniformLocation(this->gl_program, name);
+	// un_location 为负数表示当前找不到对应的字段(如果赋值 会影响着色器程序)
+	if (un_location < 0)
+		return;
+	glUniform3fv(un_location, 1, &value[0]);
+}
+
 void Shader::set_uniform_matrix_4fv(const char * name, glm::mat4 & mat)
 {
 	GLuint un_location = glGetUniformLocation(this->gl_program, name);
