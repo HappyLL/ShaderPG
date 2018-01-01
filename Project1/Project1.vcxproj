@@ -118,8 +118,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\Desktop\glfwproject\src\glad.c" />
+    <ClCompile Include="basic_color_light.cpp" />
     <ClCompile Include="color_light.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -157,6 +158,8 @@
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="basic_color_light.fs" />
+    <None Include="basic_color_light.vs" />
     <None Include="color_light.fs" />
     <None Include="color_light.vs" />
     <None Include="color_light_l.fs" />

@@ -75,6 +75,9 @@
     <ClCompile Include="color_light.cpp">
       <Filter>资源文件\lighting</Filter>
     </ClCompile>
+    <ClCompile Include="basic_color_light.cpp">
+      <Filter>资源文件\lighting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -104,6 +107,12 @@
       <Filter>资源文件\shader_res</Filter>
     </None>
     <None Include="color_light_l.vs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="basic_color_light.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="basic_color_light.vs">
       <Filter>资源文件\shader_res</Filter>
     </None>
   </ItemGroup>
