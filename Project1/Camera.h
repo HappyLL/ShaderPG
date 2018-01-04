@@ -18,7 +18,9 @@ public:
 public:
 	void Move(float camera_x, float camera_z);
 	void Zoom(float delta);
-	void Rotate();
+	void Rotate(float sc_xpos, float sc_ypos);
+	void BeginRotate(float init_r_x, float init_r_y);
+	void EndRotate();
 public:
 	glm::mat4 GetView();
 	glm::mat4 GetProjection();
@@ -40,4 +42,15 @@ private:
 
 	glm::mat4 projection;
 	glm::mat4 view;
+
+	float last_sc_posx, last_sc_posy;
+	float first_rotate;
+	float brotate;
+
+	float yaw;
+	float pitch;
+
+	bool binit_pos;
+
+	float senstive = 0.05;
 };

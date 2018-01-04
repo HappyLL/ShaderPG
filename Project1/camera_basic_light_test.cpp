@@ -18,7 +18,7 @@ double mouse_x = w_width / 2;
 double mouse_y = w_height / 2;
 
 //指的是摄像机的指向
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 
 // 俯仰角
 double pitch = 0.0;
@@ -32,6 +32,9 @@ double move_senstive = 0.005;
 bool firstMouse = true;
 
 bool last_update_tag = false;
+
+bool mouse_press = false;
+
 glm::vec3 camera_pos = glm::vec3(0.0f, 0.0f, 3.0f);
 Camera camera = Camera(camera_pos, glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), (w_width * 1.0 / w_height) * 1.0);
 
@@ -66,6 +69,16 @@ void input_process(GLFWwindow *window) {
 		camera.Move(camera_pos.x, camera_pos.z);
 		return;
 	}
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+		camera.BeginRotate(mouse_x, mouse_y);
+		return;
+	}
+
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
+		camera.EndRotate();
+		return;
+	}
+
 }
 
 void cal_glm_camera(glm::vec3 up, glm::vec3 camera_pos, glm::vec3 target_pos, glm::mat4 &view) {
@@ -83,23 +96,7 @@ void cal_glm_camera(glm::vec3 up, glm::vec3 camera_pos, glm::vec3 target_pos, gl
 }
 
 void mouse_callback(GLFWwindow *window, double xpos, double ypos) {
-	double delta_x = xpos - w_width / 2;
-	// 屏幕右下的顶点时(width, height)
-	double delta_y = ypos - w_height / 2;
-	mouse_x = xpos;
-	mouse_y = ypos;
-
-	pitch = delta_y * 90.0 / (w_height / 2);
-	yaw = delta_x * 90 / (w_width / 2);
-
-	glm::vec3 diretion;
-	diretion.x = cos(glm::radians(pitch)) * sin(glm::radians(180 + yaw));
-	diretion.y = sin(glm::radians(pitch));
-	diretion.z = cos(glm::radians(pitch)) * cos(glm::radians(180 + yaw));
-	diretion = glm::normalize(diretion);
-	//printf("%.3lf %.3lf %.3lf %.3lf\n", pitch, yaw, cos(glm::radians(pitch)) * cos(glm::radians(yaw)), cos(glm::radians(pitch)) * sin(glm::radians(yaw)));
-	//printf("%.3lf %.3lf\n", delta_x, delta_y);
-	cameraFront = diretion;
+	camera.Rotate(xpos, ypos);
 }
 
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
@@ -128,7 +125,7 @@ int main() {
 		return -1;
 	}
 	glfwSetFramebufferSizeCallback(window, windows_size_chg);
-	//glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	//视口坐标

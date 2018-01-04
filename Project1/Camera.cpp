@@ -13,6 +13,11 @@ Camera::Camera(glm::vec3 camera_pos, glm::vec3 direction, glm::vec3 up, float as
 
 	this->project_dirty = true;
 	this->view_dirty = true;
+
+	//俯仰角偏航角具体还是要根据direction来计算(先不做)
+	this->yaw = 0.0;
+	this->pitch = 180.0;
+	this->binit_pos = true;
 }
 
 Camera::~Camera()
@@ -40,8 +45,40 @@ void Camera::Zoom(float delta)
 	this->project_dirty = true;
 }
 
-void Camera::Rotate()
+void Camera::Rotate(float sc_xpos, float sc_ypos)
 {
+	if (!this->brotate)
+		return;
+	float delta_x = (sc_xpos - this->last_sc_posx) * this->senstive;
+	float delta_y = (this->last_sc_posy - sc_ypos) * this->senstive;
+
+	this->yaw += delta_y;
+	this->pitch += delta_x;
+	this->direction.z = glm::cos(glm::radians(this->yaw)) * glm::cos(glm::radians(this->pitch));
+	this->direction.y = glm::sin(glm::radians(this->yaw));
+	this->direction.x = glm::cos(glm::radians(this->yaw)) * glm::sin(glm::radians(this->pitch));
+	this->view_dirty = true;
+	this->last_sc_posx = sc_xpos;
+	this->last_sc_posy = sc_ypos;
+}
+
+void Camera::BeginRotate(float init_r_x, float init_r_y)
+{
+	if (this->brotate)
+		return;
+	this->brotate = true;
+	if (this->binit_pos) {
+		this->last_sc_posx = init_r_x;
+		this->last_sc_posy = init_r_y;
+		this->binit_pos = false;
+	}
+}
+
+void Camera::EndRotate()
+{
+	if (!this->brotate)
+		return;
+	this->brotate = false;
 }
 
 glm::mat4 Camera::GetView()
