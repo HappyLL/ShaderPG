@@ -1,6 +1,9 @@
-﻿  basic_color_light.cpp
-c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\basic_color_light.cpp(90): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\basic_color_light.cpp(91): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\basic_color_light.cpp(92): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-  Project1.vcxproj -> C:\Users\lijiayu01\documents\visual studio 2017\Projects\Project1\Debug\Project1.exe
-  Project1.vcxproj -> C:\Users\lijiayu01\documents\visual studio 2017\Projects\Project1\Debug\Project1.pdb (Partial PDB)
+﻿  camera_basic_light_test.cpp
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera_basic_light_test.cpp(91): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera_basic_light_test.cpp(92): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera_basic_light_test.cpp(93): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera_basic_light_test.cpp(195): warning C4305: “参数”: 从“double”到“float”截断
+  Camera.cpp
+  正在生成代码...
+  Project1.vcxproj -> C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\Debug\Project1.exe
+  Project1.vcxproj -> C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\Debug\Project1.pdb (Partial PDB)

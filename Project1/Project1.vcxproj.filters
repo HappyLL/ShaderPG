@@ -34,6 +34,9 @@
     <Filter Include="资源文件\lighting">
       <UniqueIdentifier>{2e13f759-e9d3-45ad-9833-4a9926cf8af7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\camera">
+      <UniqueIdentifier>{45f0e775-f28e-4a84-bbe1-5e29ba06de4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -78,10 +81,19 @@
     <ClCompile Include="basic_color_light.cpp">
       <Filter>资源文件\lighting</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>资源文件\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="camera_basic_light_test.cpp">
+      <Filter>资源文件\lighting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
       <Filter>资源文件\shader_mgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>资源文件\camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
