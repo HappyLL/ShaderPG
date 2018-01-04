@@ -27,40 +27,45 @@ double yaw = 0.0;
 
 double senstive = 0.5;
 
+double move_senstive = 0.005;
+
 bool firstMouse = true;
 
 bool last_update_tag = false;
+glm::vec3 camera_pos = glm::vec3(0.0f, 0.0f, 3.0f);
+Camera camera = Camera(camera_pos, glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), (w_width * 1.0 / w_height) * 1.0);
 
 void windows_size_chg(GLFWwindow *window, int width, int height) {
 	glfwSetWindowSize(window, width, height);
 	glViewport(0, 0, width, height);
 }
 
-glm::vec3 camera_pos = glm::vec3(0.0f, 0.0f, 3.0f);
-
 void input_process(GLFWwindow *window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 		return;
 	}
-	/*
+	
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-	printf("asdasdad");
-	camera_pos.y -= 0.01;
-	return;
+		camera_pos.z -= move_senstive;
+		camera.Move(camera_pos.x, camera_pos.z);
+		return;
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-	camera_pos.y += 0.01;
-	return;
+		camera_pos.z += move_senstive;
+		camera.Move(camera_pos.x, camera_pos.z);
+		return;
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-	camera_pos.x -= 0.01;
-	return;
+		camera_pos.x += move_senstive;
+		camera.Move(camera_pos.x, camera_pos.z);
+		return;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-	camera_pos.x += 0.01;
-	return;
-	}*/
+		camera_pos.x -= move_senstive;
+		camera.Move(camera_pos.x, camera_pos.z);
+		return;
+	}
 }
 
 void cal_glm_camera(glm::vec3 up, glm::vec3 camera_pos, glm::vec3 target_pos, glm::mat4 &view) {
@@ -97,6 +102,11 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos) {
 	cameraFront = diretion;
 }
 
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
+	//printf("xoffset is %lf yoffset is %lf\n", xoffset, yoffset);
+	camera.Zoom(yoffset);
+}
+
 int main() {
 	//step.1 建立一个简单的渲染循环
 	//step.2 画一个简单的三角形
@@ -119,6 +129,7 @@ int main() {
 	}
 	glfwSetFramebufferSizeCallback(window, windows_size_chg);
 	//glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetScrollCallback(window, scroll_callback);
 	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	//视口坐标
 	//glViewport(0, 0, w_width, w_height);
@@ -190,9 +201,6 @@ int main() {
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	
-	Camera camera = Camera(camera_pos, glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	camera.SetAspect((w_width * 1.0 / w_height) * 1.0);
 
 	glm::vec3 light_color = glm::vec3(1.0f, 1.0f, 1.0f);
 	Shader shader = Shader("basic_color_light.vs", "basic_color_light.fs");
@@ -233,11 +241,15 @@ int main() {
 
 		shader.use_program();
 		shader.set_uniformvec3("lightPos", light_pos);
+		shader.set_uniform_matrix_4fv("view", camera.GetView());
+		shader.set_uniform_matrix_4fv("projection", camera.GetProjection());
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		light_shader.use_program();
 		light_shader.set_uniform_matrix_4fv("model", model1);
+		light_shader.set_uniform_matrix_4fv("view", camera.GetView());
+		light_shader.set_uniform_matrix_4fv("projection", camera.GetProjection());
 		glBindVertexArray(LIGHT_VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 

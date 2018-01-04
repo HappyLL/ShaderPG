@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "glm/glm/glm.hpp"
@@ -11,24 +12,20 @@
 class Camera
 {
 public:
-	Camera(glm::vec3 camera_pos, glm::vec3 direction, glm::vec3 up, float fov=45.0f, float aspect=1.775,
+	Camera(glm::vec3 camera_pos, glm::vec3 direction, glm::vec3 up, float aspect = 1.775, float fov=45.0f,
 			float near_plane=1.0f, float far_plane=100.0f);
 	~Camera();
 public:
-	void Move();
-	void Zoom();
+	void Move(float camera_x, float camera_z);
+	void Zoom(float delta);
 	void Rotate();
-	void SetAspect(float aspect);
-	float GetAspect();
 public:
-	glm::mat4 GetView() { return this->view; }
-	glm::mat4 GetProjection() { return this->projection; }
+	glm::mat4 GetView();
+	glm::mat4 GetProjection();
 private:
 	glm::vec3 camera_pos;
-	//π€≤Ïæÿ’Û
-	glm::mat4 view;
-	//Õ∂”∞æÿ’Û
-	glm::mat4 projection;
+	glm::vec3 up;
+	glm::vec3 direction;
 	//fov
 	float fov;
 	//aspect
@@ -37,4 +34,10 @@ private:
 	float near_plane;
 	//far
 	float far_plane;
+
+	bool project_dirty;
+	bool view_dirty;
+
+	glm::mat4 projection;
+	glm::mat4 view;
 };
