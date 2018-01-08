@@ -1,7 +1,4 @@
 ﻿  Camera.cpp
 c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera.h(55): warning C4305: “初始化”: 从“double”到“float”截断
-  正在生成代码...
-  正在跳过...(未检测到相关更改)
-  camera_basic_light_test.cpp
   Project1.vcxproj -> C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\Debug\Project1.exe
   Project1.vcxproj -> C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\Debug\Project1.pdb (Partial PDB)

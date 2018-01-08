@@ -19,7 +19,7 @@ public:
 	void Move(float camera_x, float camera_z);
 	void Zoom(float delta);
 	void Rotate(float sc_xpos, float sc_ypos);
-	void BeginRotate(float init_r_x, float init_r_y);
+	void BeginRotate();
 	void EndRotate();
 public:
 	glm::mat4 GetView();

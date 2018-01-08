@@ -70,7 +70,7 @@ void input_process(GLFWwindow *window) {
 		return;
 	}
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-		camera.BeginRotate(mouse_x, mouse_y);
+		camera.BeginRotate();
 		return;
 	}
 

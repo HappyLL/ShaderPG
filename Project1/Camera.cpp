@@ -49,6 +49,11 @@ void Camera::Rotate(float sc_xpos, float sc_ypos)
 {
 	if (!this->brotate)
 		return;
+	if (this->binit_pos) {
+		this->last_sc_posx = sc_xpos;
+		this->last_sc_posy = sc_ypos;
+		this->binit_pos = false;
+	}
 	float delta_x = (sc_xpos - this->last_sc_posx) * this->senstive;
 	float delta_y = (this->last_sc_posy - sc_ypos) * this->senstive;
 
@@ -62,16 +67,12 @@ void Camera::Rotate(float sc_xpos, float sc_ypos)
 	this->last_sc_posy = sc_ypos;
 }
 
-void Camera::BeginRotate(float init_r_x, float init_r_y)
+void Camera::BeginRotate()
 {
 	if (this->brotate)
 		return;
 	this->brotate = true;
-	if (this->binit_pos) {
-		this->last_sc_posx = init_r_x;
-		this->last_sc_posy = init_r_y;
-		this->binit_pos = false;
-	}
+	this->binit_pos = true;
 }
 
 void Camera::EndRotate()
