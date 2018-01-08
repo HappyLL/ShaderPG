@@ -87,6 +87,9 @@
     <ClCompile Include="camera_basic_light_test.cpp">
       <Filter>资源文件\lighting</Filter>
     </ClCompile>
+    <ClCompile Include="camera_light_test.cpp">
+      <Filter>资源文件\lighting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
