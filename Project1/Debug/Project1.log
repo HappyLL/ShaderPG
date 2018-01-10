@@ -1,4 +1,9 @@
 ﻿  camera_light_test.cpp
 c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera.h(55): warning C4305: “初始化”: 从“double”到“float”截断
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera_light_test.cpp(14): warning C4305: “参数”: 从“double”到“float”截断
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera_light_test.cpp(27): warning C4305: “参数”: 从“double”到“float”截断
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera_light_test.cpp(31): warning C4305: “参数”: 从“double”到“float”截断
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera_light_test.cpp(35): warning C4305: “参数”: 从“double”到“float”截断
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera_light_test.cpp(39): warning C4305: “参数”: 从“double”到“float”截断
   Project1.vcxproj -> C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\Debug\Project1.exe
   Project1.vcxproj -> C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\Debug\Project1.pdb (Partial PDB)

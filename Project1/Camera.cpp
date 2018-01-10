@@ -2,9 +2,9 @@
 
 Camera::Camera(glm::vec3 camera_pos, glm::vec3 direction, glm::vec3 up, float aspect, float fov, float near_plane, float far_plane)
 {
-	this->camera_pos = camera_pos;
-	this->direction = direction;
-	this->up = up;
+	this->camera_pos = glm::vec3(camera_pos);
+	this->direction = glm::vec3(direction);
+	this->up = glm::vec3(up);
 
 	this->fov = fov;
 	this->aspect = aspect;
@@ -24,12 +24,12 @@ Camera::~Camera()
 {
 }
 
-void Camera::Move(float camera_x, float camera_z)
+void Camera::Move(float delta_x, float delta_z)
 {
-	if (this->camera_pos.x == camera_x && this->camera_pos.z == camera_z)
+	if (delta_x == 0 && delta_z == 0)
 		return;
-	this->camera_pos.x = camera_x;
-	this->camera_pos.z = camera_z;
+	this->camera_pos.x += delta_x;
+	this->camera_pos.z += delta_z;
 	this->view_dirty = true;
 }
 

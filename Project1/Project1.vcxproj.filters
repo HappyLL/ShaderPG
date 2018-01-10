@@ -130,5 +130,11 @@
     <None Include="basic_color_light.vs">
       <Filter>资源文件\shader_res</Filter>
     </None>
+    <None Include="camera_light_test.vs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="camera_light_test.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
   </ItemGroup>
 </Project>

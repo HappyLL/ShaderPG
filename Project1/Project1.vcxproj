@@ -168,6 +168,8 @@
   <ItemGroup>
     <None Include="basic_color_light.fs" />
     <None Include="basic_color_light.vs" />
+    <None Include="camera_light_test.fs" />
+    <None Include="camera_light_test.vs" />
     <None Include="color_light.fs" />
     <None Include="color_light.vs" />
     <None Include="color_light_l.fs" />
