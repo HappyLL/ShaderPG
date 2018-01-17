@@ -22,6 +22,11 @@ void window_mouse_cb(GLFWwindow *window, double pos_x, double pos_y) {
 	camera.Rotate(pos_x, pos_y);
 }
 
+void window_sc_scroll_cb(GLFWwindow *window, double sc_x, double sc_y) {
+	//printf("%.4lf %.4lf\n", sc_x, sc_y);
+	camera.Zoom(sc_y);
+}
+
 void input(GLFWwindow *window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
@@ -75,6 +80,7 @@ int main() {
 	}
 	glfwSetFramebufferSizeCallback(window, window_frame_size_cb);
 	glfwSetCursorPosCallback(window, window_mouse_cb);
+	glfwSetScrollCallback(window, window_sc_scroll_cb);
 
 	float vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -144,6 +150,8 @@ int main() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glm::vec3 light_color = glm::vec3(0.5f,1.0f,1.0f);
+	glm::vec3 cube_color = glm::vec3(1.0f, 0.5f, 0.31f);
+	glm::vec4 light_pos = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
 	glm::mat4 model;
 	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0, 0.5, 0));
@@ -154,6 +162,11 @@ int main() {
 
 	Shader cube_shader = Shader("camera_light_test.vs", "camera_light_test.fs");
 	Shader light_shader = Shader("camera_light_test_light.vs", "camera_light_test_light.fs");
+	cube_shader.use_program();
+	cube_shader.set_uniformvec3("cube_color", cube_color);
+	cube_shader.set_uniformvec3("light_color", light_color);
+	glm::vec4 world_light_pos = light_model * light_pos;
+	cube_shader.set_uniformvec3("light_pos", glm::vec3(world_light_pos));
 	light_shader.use_program();
 	light_shader.set_uniformvec3("light_color", light_color);
 	//cube_shader.use_program();
@@ -162,16 +175,28 @@ int main() {
 		input(window);
 		glClearColor(0, 0, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-		
+
+		float light_angle = float(sin(glfwGetTime())) * 180;
+
+		light_model = glm::mat4();
+		light_model = glm::rotate(light_model, glm::radians(light_angle), glm::vec3(1.0f, 1.0f, 0.0f));
+		light_model = glm::translate(light_model, glm::vec3(0.0, 3.5, -8.0));
+
 		glBindVertexArray(CUBE_VAO);
 		cube_shader.use_program();
 		cube_shader.set_uniform_matrix_4fv("model", model);
 		cube_shader.set_uniform_matrix_4fv("view", camera.GetView());
 		cube_shader.set_uniform_matrix_4fv("projection", camera.GetProjection());
+		glm::vec4 world_light_pos = light_model * light_pos;
+		cube_shader.set_uniformvec3("light_pos", glm::vec3(world_light_pos));
+		//printf("%lf %lf %lf\n", camera.GetCameraPos().x, camera.GetCameraPos().y, camera.GetCameraPos().z);
+		cube_shader.set_uniformvec3("camera_pos", camera.GetCameraPos());
 		//表示会去执行顶点着色器36次
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		glBindVertexArray(LIGHT_VAO);
+		//绑定不同的顶点数组 着色器需要激活
+		light_shader.use_program();
 		light_shader.set_uniform_matrix_4fv("model", light_model);
 		light_shader.set_uniform_matrix_4fv("view", camera.GetView());
 		light_shader.set_uniform_matrix_4fv("projection", camera.GetProjection());

@@ -22,6 +22,7 @@ public:
 	void BeginRotate();
 	void EndRotate();
 public:
+	glm::vec3 GetCameraPos();
 	glm::mat4 GetView();
 	glm::mat4 GetProjection();
 private:

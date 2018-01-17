@@ -82,6 +82,11 @@ void Camera::EndRotate()
 	this->brotate = false;
 }
 
+glm::vec3 Camera::GetCameraPos()
+{
+	return this->camera_pos;
+}
+
 glm::mat4 Camera::GetView()
 {
 	if (!this->view_dirty)
