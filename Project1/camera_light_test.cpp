@@ -160,12 +160,12 @@ int main() {
 	light_model = glm::translate(light_model, glm::vec3(0.0, 3.5, -8.0));
 	light_model = glm::rotate(light_model, glm::radians(55.0f), glm::vec3(1.0, 0.5, 0));
 
-	Shader cube_shader = Shader("camera_light_test.vs", "camera_light_test.fs");
+	Shader cube_shader = Shader("camera_light_test_1.vs", "camera_light_test_1.fs");
 	Shader light_shader = Shader("camera_light_test_light.vs", "camera_light_test_light.fs");
 	cube_shader.use_program();
 	cube_shader.set_uniformvec3("cube_color", cube_color);
 	cube_shader.set_uniformvec3("light_color", light_color);
-	glm::vec4 world_light_pos = light_model * light_pos;
+	glm::vec4 world_light_pos = camera.GetView() * light_model * light_pos;
 	cube_shader.set_uniformvec3("light_pos", glm::vec3(world_light_pos));
 	light_shader.use_program();
 	light_shader.set_uniformvec3("light_color", light_color);
@@ -187,7 +187,7 @@ int main() {
 		cube_shader.set_uniform_matrix_4fv("model", model);
 		cube_shader.set_uniform_matrix_4fv("view", camera.GetView());
 		cube_shader.set_uniform_matrix_4fv("projection", camera.GetProjection());
-		glm::vec4 world_light_pos = light_model * light_pos;
+		glm::vec4 world_light_pos = camera.GetView() * light_model * light_pos;
 		cube_shader.set_uniformvec3("light_pos", glm::vec3(world_light_pos));
 		//printf("%lf %lf %lf\n", camera.GetCameraPos().x, camera.GetCameraPos().y, camera.GetCameraPos().z);
 		cube_shader.set_uniformvec3("camera_pos", camera.GetCameraPos());

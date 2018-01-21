@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\lijiayu01\Desktop\glfwproject\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\lijiayu01\Desktop\glfwproject\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\glfwproject\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\glfwproject\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -117,7 +117,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\Desktop\glfwproject\src\glad.c" />
+    <ClCompile Include="..\glfwproject\src\glad.c" />
     <ClCompile Include="basic_color_light.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -170,6 +170,8 @@
     <None Include="basic_color_light.vs" />
     <None Include="camera_light_test.fs" />
     <None Include="camera_light_test.vs" />
+    <None Include="camera_light_test_1.fs" />
+    <None Include="camera_light_test_1.vs" />
     <None Include="camera_light_test_light.fs" />
     <None Include="camera_light_test_light.vs" />
     <None Include="color_light.fs" />

@@ -42,9 +42,6 @@
     <ClCompile Include="main.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Desktop\glfwproject\src\glad.c">
-      <Filter>资源文件</Filter>
-    </ClCompile>
     <ClCompile Include="triangle.cpp">
       <Filter>资源文件\hello_triangle</Filter>
     </ClCompile>
@@ -89,6 +86,9 @@
     </ClCompile>
     <ClCompile Include="camera_light_test.cpp">
       <Filter>资源文件\lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glfwproject\src\glad.c">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +140,12 @@
       <Filter>资源文件\shader_res</Filter>
     </None>
     <None Include="camera_light_test_light.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="camera_light_test_1.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="camera_light_test_1.vs">
       <Filter>资源文件\shader_res</Filter>
     </None>
   </ItemGroup>

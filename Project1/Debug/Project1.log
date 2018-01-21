@@ -1,4 +1,8 @@
-﻿  camera_light_test.cpp
+﻿  glad.c
+  Shader.cpp
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\shader.cpp(45): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\shader.cpp(80): warning C4244: “初始化”: 从“std::streamoff”转换到“long”，可能丢失数据
+  camera_light_test.cpp
 c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera.h(56): warning C4305: “初始化”: 从“double”到“float”截断
 c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera_light_test.cpp(14): warning C4305: “参数”: 从“double”到“float”截断
 c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera_light_test.cpp(22): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
@@ -7,5 +11,8 @@ c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camer
 c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera_light_test.cpp(40): warning C4305: “参数”: 从“double”到“float”截断
 c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera_light_test.cpp(44): warning C4305: “参数”: 从“double”到“float”截断
 c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera_light_test.cpp(48): warning C4305: “参数”: 从“double”到“float”截断
+  Camera.cpp
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera.h(56): warning C4305: “初始化”: 从“double”到“float”截断
+  正在生成代码...
   Project1.vcxproj -> C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\Debug\Project1.exe
   Project1.vcxproj -> C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\Debug\Project1.pdb (Partial PDB)
