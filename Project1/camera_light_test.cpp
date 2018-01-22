@@ -157,7 +157,7 @@ int main() {
 	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0, 0.5, 0));
 
 	glm::mat4 light_model;
-	light_model = glm::translate(light_model, glm::vec3(0.0, 3.5, -8.0));
+	light_model = glm::translate(light_model, glm::vec3(0.0, 3.5, -1.0));
 	light_model = glm::rotate(light_model, glm::radians(55.0f), glm::vec3(1.0, 0.5, 0));
 
 	Shader cube_shader = Shader("camera_light_test_1.vs", "camera_light_test_1.fs");
@@ -180,7 +180,7 @@ int main() {
 
 		light_model = glm::mat4();
 		light_model = glm::rotate(light_model, glm::radians(light_angle), glm::vec3(1.0f, 1.0f, 0.0f));
-		light_model = glm::translate(light_model, glm::vec3(0.0, 3.5, -8.0));
+		light_model = glm::translate(light_model, glm::vec3(0.0, 3.5, -1.0));
 
 		glBindVertexArray(CUBE_VAO);
 		cube_shader.use_program();
