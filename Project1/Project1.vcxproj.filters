@@ -90,6 +90,9 @@
     <ClCompile Include="..\glfwproject\src\glad.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lighting_materials.cpp">
+      <Filter>资源文件\lighting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
