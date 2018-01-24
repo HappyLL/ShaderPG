@@ -149,8 +149,7 @@ int main() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glm::vec3 light_color = glm::vec3(0.5f, 1.0f, 1.0f);
-	glm::vec3 cube_color = glm::vec3(1.0f, 0.5f, 0.31f);
+	glm::vec3 light_color = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec4 light_pos = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
 	glm::mat4 model;
@@ -160,10 +159,13 @@ int main() {
 	light_model = glm::translate(light_model, glm::vec3(0.0, 3.5, -1.0));
 	light_model = glm::rotate(light_model, glm::radians(55.0f), glm::vec3(1.0, 0.5, 0));
 
-	Shader cube_shader = Shader("camera_light_test_1.vs", "camera_light_test_1.fs");
+	Shader cube_shader = Shader("light_materials.vs", "light_materials.fs");
 	Shader light_shader = Shader("camera_light_test_light.vs", "camera_light_test_light.fs");
 	cube_shader.use_program();
-	cube_shader.set_uniformvec3("cube_color", cube_color);
+	cube_shader.set_uniformvec3("cube_material.ambient", glm::vec3(1.0f, 0.5f, 0.31f));
+	cube_shader.set_uniformvec3("cube_material.diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
+	cube_shader.set_uniformvec3("cube_material.speculum", glm::vec3(0.5f, 0.5f, 0.5f));
+	cube_shader.set_uniform1f("cube_material.speculum", 32.0);
 	cube_shader.set_uniformvec3("light_color", light_color);
 	glm::vec4 world_light_pos = camera.GetView() * light_model * light_pos;
 	cube_shader.set_uniformvec3("light_pos", glm::vec3(world_light_pos));

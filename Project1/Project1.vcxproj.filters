@@ -151,5 +151,11 @@
     <None Include="camera_light_test_1.vs">
       <Filter>资源文件\shader_res</Filter>
     </None>
+    <None Include="light_materials.vs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="light_materials.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
   </ItemGroup>
 </Project>
