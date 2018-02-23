@@ -28,8 +28,8 @@ void Camera::Move(float delta_x, float delta_z)
 {
 	if (delta_x == 0 && delta_z == 0)
 		return;
-	this->camera_pos.x += delta_x;
-	this->camera_pos.z += delta_z;
+	this->camera_pos.x +=  delta_x;
+	this->camera_pos.z +=  delta_z;
 	this->view_dirty = true;
 }
 

@@ -192,6 +192,7 @@ int main() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	//加载放射贴图
+	/*
 	int img_width2, img_height2, img_channel2;
 	unsigned char * img_bytes2 = stbi_load("matrix.jpg", &img_width2, &img_height2, &img_channel2, 0);
 	//加入放射贴图
@@ -208,20 +209,36 @@ int main() {
 	//设置过滤方式(对应的纹理坐标上的点的像素)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	*/
 
 	stbi_image_free(img_bytes);
 	stbi_image_free(img_bytes1);
-	stbi_image_free(img_bytes2);
+	//stbi_image_free(img_bytes2);
 
 	glm::vec3 light_color = glm::vec3(1.0f, 1.0f, 1.0f);
 	glm::vec4 light_pos = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
-	glm::mat4 model;
-	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0, 0.5, 0));
-
 	glm::mat4 light_model;
 
-	Shader cube_shader = Shader("lighting_map.vs", "lighting_map.fs");
+	glm::vec3 cubePositions[] = {
+		glm::vec3(0.0f,  0.0f,  0.0f),
+		glm::vec3(2.0f,  5.0f, -15.0f),
+		glm::vec3(-1.5f, -2.2f, -2.5f),
+		glm::vec3(-3.8f, -2.0f, -12.3f),
+		glm::vec3(2.4f, -0.4f, -3.5f),
+		glm::vec3(-1.7f,  3.0f, -7.5f),
+		glm::vec3(1.3f, -2.0f, -2.5f),
+		glm::vec3(1.5f,  2.0f, -2.5f),
+		glm::vec3(1.5f,  0.2f, -1.5f),
+		glm::vec3(-1.3f,  1.0f, -1.5f)
+	};
+
+	glm::vec3 light_ambient = glm::vec3(0.5);
+	glm::vec3 light_diffuse = glm::vec3(2.0);
+	glm::vec3 light_specular = glm::vec3(1.0);
+	glm::vec3 light_dir = glm::vec3(0.0f, 0.0, -1.0f);
+
+	Shader cube_shader = Shader("lighting_caster.vs", "lighting_caster.fs");
 	Shader light_shader = Shader("camera_light_test_light.vs", "camera_light_test_light.fs");
 	glEnable(GL_DEPTH_TEST);
 	while (!glfwWindowShouldClose(window)) {
@@ -229,33 +246,56 @@ int main() {
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		float light_angle = float(sin(glfwGetTime())) * 180;
+		//float light_angle = float(sin(glfwGetTime())) * 180;
 
 		light_model = glm::mat4();
-		light_model = glm::rotate(light_model, glm::radians(light_angle), glm::vec3(1.0f, 1.0f, 0.0f));
-		light_model = glm::translate(light_model, glm::vec3(0.0, 3.5, -1.0));
-
-		cube_shader.use_program();
-		cube_shader.set_uniform_matrix_4fv("model", model);
-		cube_shader.set_uniform_matrix_4fv("view", camera.GetView());
-		cube_shader.set_uniform_matrix_4fv("projection", camera.GetProjection());
-		cube_shader.set_uniformvec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-		cube_shader.set_uniform1f("material.shininess", 32.0f);
-		cube_shader.set_uniformvec3("light_color", light_color);
-		glm::vec4 world_light_pos = camera.GetView() * light_model * light_pos;
-		cube_shader.set_uniformvec3("light_pos", glm::vec3(world_light_pos));
-		cube_shader.set_uniform1i("material.diffuse", 0);
-		cube_shader.set_uniform1i("material.specular", 1);
-		cube_shader.set_uniform1i("material.emission", 2);
-		//printf("%lf %lf %lf\n", camera.GetCameraPos().x, camera.GetCameraPos().y, camera.GetCameraPos().z);
-		//cube_shader.set_uniformvec3("camera_pos",  camera.GetCameraPos());
-		//表示会去执行顶点着色器36次
-		glBindVertexArray(CUBE_VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		//light_model = glm::rotate(light_model, glm::radians(light_angle), glm::vec3(1.0f, 1.0f, 0.0f));
+		light_model = glm::translate(light_model, glm::vec3(0.0, 0, 3.0));
+		glm::vec4 view_light_pos = camera.GetView() * light_model * light_pos;
+		glm::vec4 view_light_dir = camera.GetView() * light_model * glm::vec4(light_dir, 1.0);
+		float radians = 0.0f;
+		for (int i = 0; i < 10; ++i) {
+			glm::mat4 model;
+			model = glm::rotate(model, glm::radians(radians), glm::vec3(1.0, 0.5, 0));
+			model = glm::translate(model, cubePositions[i]);
+			radians += 20.0f;
+			cube_shader.use_program();
+			cube_shader.set_uniformvec3("light.light_dir", glm::vec3(view_light_dir));
+			cube_shader.set_uniformvec3("light.light_color", light_color);
+			cube_shader.set_uniformvec3("light.ambient", light_ambient);
+			cube_shader.set_uniformvec3("light.diffuse", light_diffuse);
+			cube_shader.set_uniformvec3("light.specular", light_specular);
+			cube_shader.set_uniform1f("light.c", 1.0f);
+			cube_shader.set_uniform1f("light.l", 0.09f);
+			cube_shader.set_uniform1f("light.q", 0.032f);
+			cube_shader.set_uniform1f("light.cutoff", glm::cos(glm::radians(55.5)));
+			cube_shader.set_uniformvec3("light.light_pos", glm::vec3(view_light_pos));
+			cube_shader.set_uniform_matrix_4fv("model", model);
+			cube_shader.set_uniform_matrix_4fv("view", camera.GetView());
+			cube_shader.set_uniform_matrix_4fv("projection", camera.GetProjection());
+			cube_shader.set_uniformvec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+			cube_shader.set_uniform1f("material.shininess", 32.0f);
+			cube_shader.set_uniform1i("material.diffuse", 0);
+			cube_shader.set_uniform1i("material.specular", 1);
+			//cube_shader.set_uniform1i("material.emission", 2);
+			//printf("%lf %lf %lf\n", camera.GetCameraPos().x, camera.GetCameraPos().y, camera.GetCameraPos().z);
+			//cube_shader.set_uniformvec3("camera_pos",  camera.GetCameraPos());
+			//表示会去执行顶点着色器36次
+			glBindVertexArray(CUBE_VAO);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
 
 		//绑定不同的顶点数组 着色器需要激活
 		light_shader.use_program();
-		light_shader.set_uniformvec3("light_color", light_color);
+		light_shader.set_uniformvec3("light.light_dir", light_dir);
+		light_shader.set_uniformvec3("light.light_color", light_color);
+		light_shader.set_uniformvec3("light.ambient", light_ambient);
+		light_shader.set_uniformvec3("light.diffuse", light_diffuse);
+		light_shader.set_uniformvec3("light.specular", light_specular);
+		light_shader.set_uniform1f("light.c", 1.0f);
+		light_shader.set_uniform1f("light.l", 0.09f);
+		light_shader.set_uniform1f("light.q", 0.032f);
+		light_shader.set_uniformvec3("light.light_pos", glm::vec3(view_light_pos));
 		light_shader.set_uniform_matrix_4fv("model", light_model);
 		light_shader.set_uniform_matrix_4fv("view", camera.GetView());
 		light_shader.set_uniform_matrix_4fv("projection", camera.GetProjection());
