@@ -37,6 +37,15 @@
     <Filter Include="资源文件\camera">
       <UniqueIdentifier>{45f0e775-f28e-4a84-bbe1-5e29ba06de4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\Officail">
+      <UniqueIdentifier>{4b37b19e-71c7-4eb3-a6f9-903e4e214fe7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\mesh">
+      <UniqueIdentifier>{0efd1606-fb0a-49df-bb0c-daed55269c9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\model">
+      <UniqueIdentifier>{563c0733-922d-4657-98c2-a760c6ea926d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -93,6 +102,21 @@
     <ClCompile Include="lighting_materials.cpp">
       <Filter>资源文件\lighting</Filter>
     </ClCompile>
+    <ClCompile Include="lighting_map.cpp">
+      <Filter>资源文件\lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="lighting_casters.cpp">
+      <Filter>资源文件\lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>资源文件\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>资源文件\model</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelTest.cpp">
+      <Filter>资源文件\model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -100,6 +124,12 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>资源文件\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>资源文件\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>资源文件\model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -157,5 +187,25 @@
     <None Include="light_materials.fs">
       <Filter>资源文件\shader_res</Filter>
     </None>
+    <None Include="lighting_map.vs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="lighting_map.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="lighting_caster.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="model_test.vs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="model_test.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="lighting_caster.vs">
+      <Filter>资源文件\shader_res</Filter>
+    </Text>
   </ItemGroup>
 </Project>

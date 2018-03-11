@@ -1,11 +1,9 @@
-﻿  lighting_materials.cpp
+﻿  ModelTest.cpp
 c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera.h(56): warning C4305: “初始化”: 从“double”到“float”截断
-c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\lighting_materials.cpp(14): warning C4305: “参数”: 从“double”到“float”截断
-c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\lighting_materials.cpp(22): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\lighting_materials.cpp(27): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\lighting_materials.cpp(36): warning C4305: “参数”: 从“double”到“float”截断
-c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\lighting_materials.cpp(40): warning C4305: “参数”: 从“double”到“float”截断
-c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\lighting_materials.cpp(44): warning C4305: “参数”: 从“double”到“float”截断
-c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\lighting_materials.cpp(48): warning C4305: “参数”: 从“double”到“float”截断
-  Project1.vcxproj -> C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\Debug\Project1.exe
-  Project1.vcxproj -> C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\Debug\Project1.pdb (Partial PDB)
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\modeltest.cpp(11): warning C4305: “参数”: 从“double”到“float”截断
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\modeltest.cpp(33): warning C4305: “参数”: 从“double”到“float”截断
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\modeltest.cpp(37): warning C4305: “参数”: 从“double”到“float”截断
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\modeltest.cpp(41): warning C4305: “参数”: 从“double”到“float”截断
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\modeltest.cpp(45): warning C4305: “参数”: 从“double”到“float”截断
+  Project1.vcxproj -> C:\Users\lijiayu01\documents\visual studio 2017\Projects\Project1\Debug\Project1.exe
+  Project1.vcxproj -> C:\Users\lijiayu01\documents\visual studio 2017\Projects\Project1\Debug\Project1.pdb (Partial PDB)
