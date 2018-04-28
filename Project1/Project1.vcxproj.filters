@@ -120,6 +120,12 @@
     <ClCompile Include="DepthTest.cpp">
       <Filter>资源文件\advanced_opengl</Filter>
     </ClCompile>
+    <ClCompile Include="StencilTest.cpp">
+      <Filter>资源文件\advanced_opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="Blend.cpp">
+      <Filter>资源文件\advanced_opengl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -215,6 +221,12 @@
       <Filter>资源文件\shader_res</Filter>
     </None>
     <None Include="depth_test_plane.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="stencil_test_outline.vs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="stencil_test_outline.fs">
       <Filter>资源文件\shader_res</Filter>
     </None>
   </ItemGroup>

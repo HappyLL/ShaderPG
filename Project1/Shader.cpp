@@ -11,14 +11,14 @@ Shader::Shader(const char * vs, const char * fs)
 	const char *code = this->vs_code.c_str();
 	glShaderSource(vertex_shader, 1, &code, NULL);
 	glCompileShader(vertex_shader);
-	this->check_shader_compile(vertex_shader, GL_COMPILE_STATUS, "vertex");
+	this->check_shader_compile(vertex_shader, GL_COMPILE_STATUS, vs);
 	//构造片段着色器
 	unsigned int frage_shader;
 	frage_shader = glCreateShader(GL_FRAGMENT_SHADER);
 	code = this->fs_code.c_str();
 	glShaderSource(frage_shader, 1, &code, NULL);
 	glCompileShader(frage_shader);
-	this->check_shader_compile(frage_shader, GL_COMPILE_STATUS, "frage");
+	this->check_shader_compile(frage_shader, GL_COMPILE_STATUS, fs);
 	//构造着色器程序
 	this->gl_program = glCreateProgram();
 	glAttachShader(this->gl_program, vertex_shader);
