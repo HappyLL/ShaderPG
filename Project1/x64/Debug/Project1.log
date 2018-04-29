@@ -1,0 +1,19 @@
+﻿camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwInit，该符号在函数 main 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwTerminate，该符号在函数 main 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwWindowHint，该符号在函数 main 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwCreateWindow，该符号在函数 main 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwWindowShouldClose，该符号在函数 main 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwSetWindowShouldClose，该符号在函数 "void __cdecl input(struct GLFWwindow *)" (?input@@YAXPEAUGLFWwindow@@@Z) 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwSetWindowSize，该符号在函数 "void __cdecl window_frame_size_cb(struct GLFWwindow *,int,int)" (?window_frame_size_cb@@YAXPEAUGLFWwindow@@HH@Z) 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwSetFramebufferSizeCallback，该符号在函数 main 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwPollEvents，该符号在函数 main 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwGetKey，该符号在函数 "void __cdecl input(struct GLFWwindow *)" (?input@@YAXPEAUGLFWwindow@@@Z) 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwGetMouseButton，该符号在函数 "void __cdecl input(struct GLFWwindow *)" (?input@@YAXPEAUGLFWwindow@@@Z) 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwSetCursorPosCallback，该符号在函数 main 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwSetScrollCallback，该符号在函数 main 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwGetTime，该符号在函数 main 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwMakeContextCurrent，该符号在函数 main 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwSwapBuffers，该符号在函数 main 中被引用
+camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwGetProcAddress，该符号在函数 main 中被引用
+C:\program1\opengl\ShaderPG\glfwproject\lib\glfw3.lib : warning LNK4272: 库计算机类型“x86”与目标计算机类型“x64”冲突
+C:\program1\opengl\ShaderPG\x64\Debug\Project1.exe : fatal error LNK1120: 17 个无法解析的外部命令
