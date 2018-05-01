@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwInit，该符号在函数 main 中被引用
 camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwTerminate，该符号在函数 main 中被引用
 camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwWindowHint，该符号在函数 main 中被引用
@@ -17,3 +18,7 @@ camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwSwapBuffe
 camera_light_test.obj : error LNK2019: 无法解析的外部符号 glfwGetProcAddress，该符号在函数 main 中被引用
 C:\program1\opengl\ShaderPG\glfwproject\lib\glfw3.lib : warning LNK4272: 库计算机类型“x86”与目标计算机类型“x64”冲突
 C:\program1\opengl\ShaderPG\x64\Debug\Project1.exe : fatal error LNK1120: 17 个无法解析的外部命令
+=======
+﻿  glad.c
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\glfwproject\src\glad.c(24): fatal error C1083: 无法打开包括文件: “glad/glad.h”: No such file or directory
+>>>>>>> d24c79bb2325f87cf231d8d6b218e8e5a0626694

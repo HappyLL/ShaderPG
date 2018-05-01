@@ -1,5 +1,8 @@
 #include "Shader.h"
 
+// 这边先设一个比较大的值 当大于这个值时 说明此时LOCATION的位置不正确(有助于排查问题)
+#define MAX_LOCATION_NUM 100000
+
 Shader::Shader(const char * vs, const char * fs)
 {
 	//io读取对应的shader文件
@@ -11,14 +14,14 @@ Shader::Shader(const char * vs, const char * fs)
 	const char *code = this->vs_code.c_str();
 	glShaderSource(vertex_shader, 1, &code, NULL);
 	glCompileShader(vertex_shader);
-	this->check_shader_compile(vertex_shader, GL_COMPILE_STATUS, "vertex");
+	this->check_shader_compile(vertex_shader, GL_COMPILE_STATUS, vs);
 	//构造片段着色器
 	unsigned int frage_shader;
 	frage_shader = glCreateShader(GL_FRAGMENT_SHADER);
 	code = this->fs_code.c_str();
 	glShaderSource(frage_shader, 1, &code, NULL);
 	glCompileShader(frage_shader);
-	this->check_shader_compile(frage_shader, GL_COMPILE_STATUS, "frage");
+	this->check_shader_compile(frage_shader, GL_COMPILE_STATUS, fs);
 	//构造着色器程序
 	this->gl_program = glCreateProgram();
 	glAttachShader(this->gl_program, vertex_shader);
@@ -39,16 +42,24 @@ void Shader::use_program()
 	glUseProgram(this->gl_program);
 }
 
-void Shader::set_uniform1f(const char * name, double value)
+void Shader::set_uniform1f(const char * name, float value)
 {
 	GLuint un_location = glGetUniformLocation(this->gl_program, name);
-	glUniform1f(this->gl_program, value);
+	if (un_location >= MAX_LOCATION_NUM || un_location < 0) {
+		std::cout << "set_uniformlf location error name is " << name << " value is " << value << std::endl;
+		return;
+	}
+	glUniform1f(un_location, value);
 }
 
 void Shader::set_uniform1i(const char * name, int value)
 {
 	GLuint un_location = glGetUniformLocation(this->gl_program, name);
-	glUniform1i(this->gl_program, value);
+	if (un_location >= MAX_LOCATION_NUM || un_location < 0) {
+		std::cout << "set_uniformli location error name is " << name << " value is " << value << std::endl;
+		return;
+	}
+	glUniform1i(un_location, value);
 }
 
 void Shader::set_uniformvec3(const char * name, glm::vec3 &value)
@@ -56,14 +67,19 @@ void Shader::set_uniformvec3(const char * name, glm::vec3 &value)
 	// 不传引用的bug 会导致传gpu值时(c/s) 可能导致当前数据被销毁 所以必须要用引用
 	int un_location = glGetUniformLocation(this->gl_program, name);
 	// un_location 为负数表示当前找不到对应的字段(如果赋值 会影响着色器程序)
-	if (un_location < 0)
+	if (un_location >= MAX_LOCATION_NUM || un_location < 0) {
+		std::cout << "set_uniformvec3 location error name is " << name << std::endl;
 		return;
+	}
 	glUniform3fv(un_location, 1, &value[0]);
 }
 
 void Shader::set_uniform_matrix_4fv(const char * name, glm::mat4 & mat)
 {
 	GLuint un_location = glGetUniformLocation(this->gl_program, name);
+	if (un_location >= MAX_LOCATION_NUM || un_location < 0) {
+		std::cout << "set_uniform_matrix_4fv location error name is " << name << std::endl;
+	}
 	glUniformMatrix4fv(un_location, 1, GL_FALSE, glm::value_ptr(mat));
 }
 

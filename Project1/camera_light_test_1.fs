@@ -14,7 +14,8 @@ void main(){
 	float ambient_strength = 0.1;
 	vec3 ambient = ambient_strength * light_color;
 	float diffuse_strength = max(dot(normalize(light_pos - frag_pos), frag_normal), 0);
-	vec3 diffuse = diffuse_strength * light_color;
+	// 散射少 反射多就会形成亮点
+	vec3 diffuse = diffuse_strength * light_color * 0.1;
 	vec3 view_reflect = reflect((frag_pos - light_pos), frag_normal);
 	float projection_strength = max(dot(normalize(view_reflect), normalize(-frag_pos)), 0);
 	vec3 projection = pow(projection_strength, 32) * light_color * 0.5;
