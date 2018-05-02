@@ -30,6 +30,10 @@ Shader::Shader(const char * vs, const char * fs)
 	this->check_shader_link(this->gl_program, GL_LINK_STATUS);
 	glDeleteShader(vertex_shader);
 	glDeleteShader(frage_shader);
+	this->p_1 = 0;
+	this->p_2 = 0;
+	this->p_3 = 0;
+	this->p_4 = 0;
 }
 
 Shader::~Shader()
@@ -50,8 +54,10 @@ void Shader::del_program()
 void Shader::set_uniform1f(const char * name, float value)
 {
 	GLuint un_location = glGetUniformLocation(this->gl_program, name);
-	if (un_location >= MAX_LOCATION_NUM || un_location < 0) {
-		std::cout << "set_uniformlf location error name is " << name << " value is " << value << std::endl;
+	if (un_location >= MAX_LOCATION_NUM || un_location < 0 ) {
+		if (!this->p_1)
+			std::cout << "set_uniformlf location error name is " << name << " value is " << value << std::endl;
+		this->p_1 = true;
 		return;
 	}
 	glUniform1f(un_location, value);
@@ -61,7 +67,9 @@ void Shader::set_uniform1i(const char * name, int value)
 {
 	GLuint un_location = glGetUniformLocation(this->gl_program, name);
 	if (un_location >= MAX_LOCATION_NUM || un_location < 0) {
-		std::cout << "set_uniformli location error name is " << name << " value is " << value << std::endl;
+		if(!this->p_2)
+			std::cout << "set_uniformli location error name is " << name << " value is " << value << std::endl;
+		this->p_2 = true;
 		return;
 	}
 	glUniform1i(un_location, value);
@@ -73,7 +81,9 @@ void Shader::set_uniformvec3(const char * name, glm::vec3 &value)
 	int un_location = glGetUniformLocation(this->gl_program, name);
 	// un_location 为负数表示当前找不到对应的字段(如果赋值 会影响着色器程序)
 	if (un_location >= MAX_LOCATION_NUM || un_location < 0) {
-		std::cout << "set_uniformvec3 location error name is " << name << std::endl;
+		if (!this->p_3)
+			std::cout << "set_uniformvec3 location error name is " << name << std::endl;
+		this->p_3 = true;
 		return;
 	}
 	glUniform3fv(un_location, 1, &value[0]);
@@ -83,7 +93,9 @@ void Shader::set_uniform_matrix_4fv(const char * name, glm::mat4 & mat)
 {
 	GLuint un_location = glGetUniformLocation(this->gl_program, name);
 	if (un_location >= MAX_LOCATION_NUM || un_location < 0) {
-		std::cout << "set_uniform_matrix_4fv location error name is " << name << std::endl;
+		if (!this->p_4)
+			std::cout << "set_uniform_matrix_4fv location error name is " << name << std::endl;
+		this->p_4 = true;
 	}
 	glUniformMatrix4fv(un_location, 1, GL_FALSE, glm::value_ptr(mat));
 }

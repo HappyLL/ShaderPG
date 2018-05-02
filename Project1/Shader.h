@@ -25,4 +25,5 @@ private:
 private:
 	std::string vs_code, fs_code;
 	GLuint gl_program;
+	int p_1, p_2, p_3, p_4;
 };
