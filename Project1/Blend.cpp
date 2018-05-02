@@ -7,6 +7,7 @@
 // .1 创建窗口(初始化glfw库, 定义版本(主,次和接口模式), 创建窗口, 初始化一些api的地址, 建立渲染循环)
 // .2 创建摄像头，创建盒子和地板的顶点缓冲区, 创建顶点数组 创建纹理对象
 // .3 编写着色器相关
+// .4 丢弃对应片段
 const int window_height = 640;
 const int window_width = 960;
 
@@ -202,8 +203,11 @@ int main() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	Shader cube_shader("depth_test_cube.vs", "depth_test_cube.fs");
 	Shader plane_shader("depth_test_plane.vs", "depth_test_plane.fs");
+	Shader grass_shader("blend_discard_cube.vs", "blend_discard_cube.fs");
 	GLuint cube_texture = load_texture("marble.jpg");
 	GLuint plane_texture = load_texture("metal.png");
+	//丢弃对应片段
+	//GLuint grass_texture = load_texture("grass.png");
 
 	glm::mat4 model;
 	glm::mat4 cube_model = glm::rotate(model, 45.0f, glm::vec3(0, 1.0, 0));
@@ -215,8 +219,23 @@ int main() {
 		glClearColor(0.2, 0.2, 0.2, 0.5);
 		// 其他渲染操作
 		for (int index = 0; index < 3; ++index) {
-			cube_shader.use_program();
 			glm::mat4 trans = glm::translate(cube_model, translates[index]);
+
+			/*
+			// 丢弃对应片段
+			// 需要先绘制草 如果后绘制 会因为深度测试将其剔除
+			grass_shader.use_program();
+			grass_shader.set_uniform_matrix_4fv("mmodel", trans);
+			grass_shader.set_uniform_matrix_4fv("mview", camera.GetView());
+			grass_shader.set_uniform_matrix_4fv("mprojection", camera.GetProjection());
+			grass_shader.set_uniform1i("t0", 0);
+			glBindVertexArray(cubeVAO);
+			if (grass_texture != -1)
+				glBindTexture(GL_TEXTURE_2D, grass_texture);
+			glDrawArrays(GL_TRIANGLES, 6, 6);
+			*/
+
+			cube_shader.use_program();
 			cube_shader.set_uniform_matrix_4fv("mmodel", trans);
 			cube_shader.set_uniform_matrix_4fv("mview", camera.GetView());
 			cube_shader.set_uniform_matrix_4fv("mprojection", camera.GetProjection());
@@ -224,7 +243,7 @@ int main() {
 			glBindVertexArray(cubeVAO);
 			if (cube_texture != -1)
 				glBindTexture(GL_TEXTURE_2D, cube_texture);
-			glDrawArrays(GL_TRIANGLES, 0, 36);
+			glDrawArrays(GL_TRIANGLES, 0, 36);			
 		}
 
 		plane_shader.use_program();

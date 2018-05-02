@@ -12,6 +12,7 @@ public:
 	Shader(const char *vs, const char *fs);
 	~Shader();
 	void use_program();
+	void del_program();
 	void set_uniform1f(const char *name, float value);
 	void set_uniform1i(const char *name, int value);
 	void set_uniformvec3(const char * name, glm::vec3 & value);

@@ -1,8 +1,9 @@
 ﻿  Blend.cpp
-c:\program1\opengl\shaderpg\project1\camera.h(54): warning C4305: “初始化”: 从“double”到“float”截断
-c:\program1\opengl\shaderpg\project1\blend.cpp(42): warning C4305: “参数”: 从“double”到“float”截断
-c:\program1\opengl\shaderpg\project1\blend.cpp(46): warning C4305: “参数”: 从“double”到“float”截断
-c:\program1\opengl\shaderpg\project1\blend.cpp(50): warning C4305: “参数”: 从“double”到“float”截断
-c:\program1\opengl\shaderpg\project1\blend.cpp(54): warning C4305: “参数”: 从“double”到“float”截断
-c:\program1\opengl\shaderpg\project1\blend.cpp(215): warning C4305: “参数”: 从“double”到“GLfloat”截断
-  Project1.vcxproj -> C:\program1\opengl\ShaderPG\Debug\Project1.exe
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\camera.h(54): warning C4305: “初始化”: 从“double”到“float”截断
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\blend.cpp(43): warning C4305: “参数”: 从“double”到“float”截断
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\blend.cpp(47): warning C4305: “参数”: 从“double”到“float”截断
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\blend.cpp(51): warning C4305: “参数”: 从“double”到“float”截断
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\blend.cpp(55): warning C4305: “参数”: 从“double”到“float”截断
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\blend.cpp(218): warning C4305: “参数”: 从“double”到“GLfloat”截断
+  Project1.vcxproj -> C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\Debug\Project1.exe
+  Project1.vcxproj -> C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\Debug\Project1.pdb (Partial PDB)

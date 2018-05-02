@@ -235,6 +235,12 @@
     <None Include="blend_fs.fs">
       <Filter>资源文件\shader_res</Filter>
     </None>
+    <None Include="blend_discard_cube.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="blend_discard_cube.vs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="lighting_caster.vs">

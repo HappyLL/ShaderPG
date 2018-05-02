@@ -42,6 +42,11 @@ void Shader::use_program()
 	glUseProgram(this->gl_program);
 }
 
+void Shader::del_program() 
+{
+	glDeleteProgram(this->gl_program);
+}
+
 void Shader::set_uniform1f(const char * name, float value)
 {
 	GLuint un_location = glGetUniformLocation(this->gl_program, name);
