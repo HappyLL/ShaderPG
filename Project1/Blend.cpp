@@ -217,8 +217,8 @@ int main() {
 	glm::mat4 cube_model = glm::rotate(model, 45.0f, glm::vec3(0, 1.0, 0));
 	glm::vec3 translates[] = { glm::vec3(0.0f), glm::vec3(1.5f ,0, 2.5f), glm::vec3(-1.5f, 0, -0.8f) };
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	while (!glfwWindowShouldClose(window)) {
 		input(window);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
