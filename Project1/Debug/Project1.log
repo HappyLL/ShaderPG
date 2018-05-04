@@ -5,5 +5,5 @@ c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\blend
 c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\blend.cpp(52): warning C4305: “参数”: 从“double”到“float”截断
 c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\blend.cpp(56): warning C4305: “参数”: 从“double”到“float”截断
 c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\blend.cpp(225): warning C4305: “参数”: 从“double”到“GLfloat”截断
-  Project1.vcxproj -> C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\Debug\Project1.exe
-  Project1.vcxproj -> C:\Users\lijiayu01\Documents\Visual Studio 2017\Projects\Project1\Debug\Project1.pdb (Partial PDB)
+  Project1.vcxproj -> C:\Users\lijiayu01\documents\visual studio 2017\Projects\Project1\Debug\Project1.exe
+  Project1.vcxproj -> C:\Users\lijiayu01\documents\visual studio 2017\Projects\Project1\Debug\Project1.pdb (Partial PDB)
