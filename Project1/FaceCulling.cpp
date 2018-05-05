@@ -45,7 +45,7 @@ int main() {
 	glfwSetKeyCallback(window, &key_cb);
 	// 正方形的点 已逆时针作为正向
 	float cube_vertexs[] = {
-
+		-0.5, -0.5
 	};
 
 	while (!glfwWindowShouldClose(window)) {
