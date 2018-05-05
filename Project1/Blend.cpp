@@ -218,7 +218,7 @@ int main() {
 	glm::vec3 translates[] = { glm::vec3(0.0f), glm::vec3(1.5f ,0, 2.5f), glm::vec3(-1.5f, 0, -0.8f) };
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	while (!glfwWindowShouldClose(window)) {
 		input(window);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -251,6 +251,10 @@ int main() {
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 
 			//绘制半透明纹理
+			if (index == 1)
+				// 越近的越晚绘制 保证不会由于先绘制深度测试近处的alpha图 在绘制远的远的就直接被丢弃了
+				// 其他算法用于解决透明图之间的遮挡问题可以采用 次序无关透明度技术
+				trans = glm::translate(trans, glm::vec3(-1.0f, 0.0f, 0.0f));
 			blend_shader.use_program();
 			blend_shader.set_uniform_matrix_4fv("mmodel", trans);
 			blend_shader.set_uniform_matrix_4fv("mview", camera.GetView());
