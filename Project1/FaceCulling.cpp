@@ -10,6 +10,11 @@
 #define window_width 1024
 #define window_height 768
 
+glm::vec3 camera_pos(0.0f, 0.0f, 3.0f);
+glm::vec3 direction(0.0f, 0.0f, -1.0f);
+glm::vec3 up(0.0f, 1.0f, 0.0f);
+Camera camera = Camera(camera_pos, direction, up);
+
 void frame_buffer_cb(GLFWwindow *window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
@@ -38,6 +43,11 @@ int main() {
 	glViewport(0, 0, window_width, window_height);
 	glfwSetFramebufferSizeCallback(window, &frame_buffer_cb);
 	glfwSetKeyCallback(window, &key_cb);
+	// 正方形的点 已逆时针作为正向
+	float cube_vertexs[] = {
+
+	};
+
 	while (!glfwWindowShouldClose(window)) {
 		input(window);
 		glClear(GL_COLOR_BUFFER_BIT);
