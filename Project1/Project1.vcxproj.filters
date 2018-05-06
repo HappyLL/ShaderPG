@@ -129,6 +129,9 @@
     <ClCompile Include="FaceCulling.cpp">
       <Filter>资源文件\advanced_opengl</Filter>
     </ClCompile>
+    <ClCompile Include="FrameBuffer.cpp">
+      <Filter>资源文件\advanced_opengl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
