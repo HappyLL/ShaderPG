@@ -1,4 +1,4 @@
 ﻿  FrameBuffer.cpp
 c:\program1\opengl\shaderpg\project1\camera.h(54): warning C4305: “初始化”: 从“double”到“float”截断
-c:\program1\opengl\shaderpg\project1\framebuffer.cpp(37): warning C4305: “参数”: 从“double”到“GLfloat”截断
+c:\program1\opengl\shaderpg\project1\framebuffer.cpp(137): warning C4305: “参数”: 从“double”到“GLfloat”截断
   Project1.vcxproj -> C:\program1\opengl\ShaderPG\Debug\Project1.exe

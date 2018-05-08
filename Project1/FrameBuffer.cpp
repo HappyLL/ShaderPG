@@ -67,14 +67,88 @@ int main() {
 		glfwTerminate();
 	glfwSetFramebufferSizeCallback(window, &frame_size_cb);
 	glfwSetKeyCallback(window, &key_code_cb);
+	float cubeVertices[] = {
+		// positions          // texture Coords
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+		0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+	};
+	int cube_texture = load_texture("marble.jpg");
+	GLuint CUBE_VBO;
+	glGenBuffers(1, &CUBE_VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, CUBE_VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), (void *)cubeVertices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	GLuint CUBE_VAO;
+	glGenVertexArrays(1, &CUBE_VAO);
+	glBindVertexArray(CUBE_VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, CUBE_VBO);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GL_FLOAT), (void*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GL_FLOAT), (void*)(3 * sizeof(GL_FLOAT)));
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	Shader cube_shader("depth_test_cube.vs", "depth_test_cube.fs");
+	glm::mat4 model;
+
+	glEnable(GL_DEPTH_TEST);
 	while (!glfwWindowShouldClose(window)) {
 		input(window);
 		glClearColor(0.2, 0.2, 0.2, 0.5);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		cube_shader.use_program();
+		//cube_shader.set_uniform_matrix_4fv("mmodel", model);
+		//cube_shader.set_uniform_matrix_4fv("mview", camera.GetView());
+		//cube_shader.set_uniform_matrix_4fv("mprojection", camera.GetProjection());
+		cube_shader.set_uniform1i("t0", 0);
+		glBindVertexArray(CUBE_VAO);
+		glBindTexture(GL_TEXTURE_2D, cube_texture);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		// ½»»»
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
-
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	return 0;
 }
