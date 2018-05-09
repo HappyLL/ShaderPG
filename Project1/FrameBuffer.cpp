@@ -13,7 +13,7 @@ glm::vec3 camera_pos(0, 0, 3.0f);
 glm::vec3 camera_up(0.0, 1.0, 0.0f);
 glm::vec3 camera_dir(0.0, 0.0, -1.0f);
 
-Camera camera = Camera(camera_pos, camera_dir, camera_up, WIDTH * 1,0 / HEIGHT);
+Camera camera = Camera(camera_pos, camera_dir, camera_up, WIDTH * 1.0 / HEIGHT);
 
 void frame_size_cb(GLFWwindow *window, int width, int height) {
 	glViewport(0, 0, width, height);
@@ -24,8 +24,42 @@ void key_code_cb(GLFWwindow *window, int keycode, int a, int b, int c) {
 		glfwSetWindowShouldClose(window, true);
 }
 
-void input(GLFWwindow *window) {
+void window_mouse_cb(GLFWwindow *window, double pos_x, double pos_y) {
+	camera.Rotate((float)pos_x, (float)pos_y);
+}
 
+void window_sc_scroll_cb(GLFWwindow *window, double sc_x, double sc_y) {
+	//printf("%.4lf %.4lf\n", sc_x, sc_y);
+	camera.Zoom((float)sc_y);
+}
+
+void input(GLFWwindow *window) {
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		camera.Move(0, -0.01);
+		return;
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		camera.Move(0, 0.01);
+		return;
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+		camera.Move(-0.01, 0);
+		return;
+	}
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+		camera.Move(0.01, 0);
+		return;
+	}
+
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+		camera.BeginRotate();
+		return;
+	}
+
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
+		camera.EndRotate();
+		return;
+	}
 }
 
 int load_texture(const char *filepath) {
@@ -67,6 +101,8 @@ int main() {
 		glfwTerminate();
 	glfwSetFramebufferSizeCallback(window, &frame_size_cb);
 	glfwSetKeyCallback(window, &key_code_cb);
+	glfwSetCursorPosCallback(window, window_mouse_cb);
+	glfwSetScrollCallback(window, window_sc_scroll_cb);
 	float cubeVertices[] = {
 		// positions          // texture Coords
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -127,19 +163,33 @@ int main() {
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GL_FLOAT), (void*)(3 * sizeof(GL_FLOAT)));
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+	//为当前缓冲增加一个颜色附件作为颜色缓冲区保存值的方式
+	GLuint texture_attach;
+	glGenTextures(1, &texture_attach);
+	glBindTexture(GL_TEXTURE_2D, texture_attach);
+	//在内存中申请w，h的内存
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WIDTH, HEIGHT, 0, GL_RGBA, NULL);
+
+	GLuint FBO;
+	glGenFramebuffers(1, &FBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+
+
 
 	Shader cube_shader("depth_test_cube.vs", "depth_test_cube.fs");
 	glm::mat4 model;
-
+	model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0, 1.0, 0));
+	//model = glm::translate(model, glm::vec3(0, 0f, 0));
 	glEnable(GL_DEPTH_TEST);
 	while (!glfwWindowShouldClose(window)) {
 		input(window);
 		glClearColor(0.2, 0.2, 0.2, 0.5);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		cube_shader.use_program();
-		//cube_shader.set_uniform_matrix_4fv("mmodel", model);
-		//cube_shader.set_uniform_matrix_4fv("mview", camera.GetView());
-		//cube_shader.set_uniform_matrix_4fv("mprojection", camera.GetProjection());
+		cube_shader.set_uniform_matrix_4fv("mmodel", model);
+		cube_shader.set_uniform_matrix_4fv("mview", camera.GetView());
+		cube_shader.set_uniform_matrix_4fv("mprojection", camera.GetProjection());
 		cube_shader.set_uniform1i("t0", 0);
 		glBindVertexArray(CUBE_VAO);
 		glBindTexture(GL_TEXTURE_2D, cube_texture);
@@ -148,6 +198,7 @@ int main() {
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
+	glDeleteFramebuffers(1, &FBO);
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	return 0;
