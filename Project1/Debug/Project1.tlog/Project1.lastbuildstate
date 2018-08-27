@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v141:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=10.0.15063.0
 Debug|Win32|C:\Users\lijiayu01\documents\visual studio 2017\Projects\Project1\|
+=======
+#TargetFrameworkVersion=v4.0:PlatformToolSet=v141:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=10.0.16299.0
+Debug|Win32|C:\program1\opengl\ShaderPG\|
+>>>>>>> 06d5ae962fbe5199955fcad290122cc3381f17d0

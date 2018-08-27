@@ -147,6 +147,15 @@ int main() {
 		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
+	// 帧缓冲全屏坐标
+	float cubeFbVertices[] = {
+		-1, -1, 0, 0, 0,
+		-1, 1, 0, 0, 1,
+		1, -1, 0, 1, 0,
+		1, 1, 0, 1, 1,
+		1, -1, 0, 1, 0,
+		-1, 1, 0, 0, 1,
+	};
 	int cube_texture = load_texture("marble.jpg");
 	GLuint CUBE_VBO;
 	glGenBuffers(1, &CUBE_VBO);
@@ -169,21 +178,60 @@ int main() {
 	glGenTextures(1, &texture_attach);
 	glBindTexture(GL_TEXTURE_2D, texture_attach);
 	//在内存中申请w，h的内存
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WIDTH, HEIGHT, 0, GL_RGBA, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	// 这两个必须要设置不然显示不出纹理附件的信息
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//为当前缓冲增加渲染缓冲用来充当模板和颜色的缓冲区
+	GLuint render_buffer;
+	glGenRenderbuffers(1, &render_buffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, render_buffer);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, WIDTH, HEIGHT);
 
 	GLuint FBO;
 	glGenFramebuffers(1, &FBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+	//添加一个纹理附件
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture_attach, 0);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, render_buffer);
+	
+	int status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+	if (status == GL_FRAMEBUFFER_COMPLETE)
+		std::cout << "framebuffer complete" << std::endl;
+	else
+		std::cout << "framebuffer not complete " << status << std::endl;
 
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
+	GLuint FB_CUBE_VBO;
+	glGenBuffers(1, &FB_CUBE_VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, FB_CUBE_VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(cubeFbVertices), cubeFbVertices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	GLuint FB_CUBE_VAO;
+	glGenVertexArrays(1, &FB_CUBE_VAO);
+	glBindVertexArray(FB_CUBE_VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, FB_CUBE_VBO);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GL_FLOAT), (void *)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GL_FLOAT), (void *)(3 * sizeof(GL_FLOAT)));
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	Shader cube_shader("depth_test_cube.vs", "depth_test_cube.fs");
+	Shader cube_fb_shader("fb_cube.vs", "fb_cube.fs");
 	glm::mat4 model;
 	model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0, 1.0, 0));
 	//model = glm::translate(model, glm::vec3(0, 0f, 0));
-	glEnable(GL_DEPTH_TEST);
 	while (!glfwWindowShouldClose(window)) {
 		input(window);
+		// FBO绑定需要放在最前面 表示之后的渲染都是基于这个缓冲区的
+		glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+		glEnable(GL_DEPTH_TEST);
 		glClearColor(0.2, 0.2, 0.2, 0.5);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		cube_shader.use_program();
@@ -191,15 +239,36 @@ int main() {
 		cube_shader.set_uniform_matrix_4fv("mview", camera.GetView());
 		cube_shader.set_uniform_matrix_4fv("mprojection", camera.GetProjection());
 		cube_shader.set_uniform1i("t0", 0);
+		// 绑定FBO时应该不需要在设置其的GL_TEXTURE_2D 和 GL_RENDERBUFFER
 		glBindVertexArray(CUBE_VAO);
 		glBindTexture(GL_TEXTURE_2D, cube_texture);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+		
+		// 绘制一个全景的正方体
+		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		//glClearColor(1.0, 0, 0, 0.5);
+		//glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+		//为什么禁用深度缓冲会出现结果(虽然该结果不带有具体的纹理信息)
+		//我可以拿到其的颜色附件
+		//glBindVertexArray(CUBE_VAO);
+		//glBindTexture(GL_TEXTURE_2D, texture_attach);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
+		// 绘制一个占满整个窗口的纹理附件(只要其的坐标不受相机控制就行)
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDisable(GL_DEPTH_TEST);
+		cube_fb_shader.use_program();
+		cube_fb_shader.set_uniform1i("t0", 0);
+		glBindVertexArray(FB_CUBE_VAO);
+		glBindTexture(GL_TEXTURE_2D, texture_attach);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 		// 交换
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glDeleteFramebuffers(1, &FBO);
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	return 0;
 }

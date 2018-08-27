@@ -298,6 +298,12 @@
     <None Include="blend_discard_cube.vs">
       <Filter>资源文件\shader_res</Filter>
     </None>
+    <None Include="fb_cube.vs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
+    <None Include="fb_cube.fs">
+      <Filter>资源文件\shader_res</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="lighting_caster.vs">
