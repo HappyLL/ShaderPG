@@ -127,6 +127,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\glfwproject\src\glad.c" />
+    <ClCompile Include="AutoReleasePool.cpp" />
     <ClCompile Include="basic_color_light.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -152,7 +153,14 @@
     <ClCompile Include="FaceCulling.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="FrameBuffer.cpp" />
+    <ClCompile Include="FrameBuffer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameLogic.cpp" />
+    <ClCompile Include="GEngine.cpp" />
+    <ClCompile Include="GRef.cpp" />
+    <ClCompile Include="GWin.cpp" />
     <ClCompile Include="lighting_casters.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -215,7 +223,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AutoReleasePool.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="GameLogic.h" />
+    <ClInclude Include="GEngine.h" />
+    <ClInclude Include="GRef.h" />
+    <ClInclude Include="GWin.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

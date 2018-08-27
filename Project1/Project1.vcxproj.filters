@@ -46,6 +46,24 @@
     <Filter Include="资源文件\advanced_opengl">
       <UniqueIdentifier>{8019440d-f97f-4adb-8f36-db863cc31900}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\game">
+      <UniqueIdentifier>{f8ca4144-288f-447a-bbe5-29eec6361132}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\game\GameLogic">
+      <UniqueIdentifier>{eeeb0463-b5ee-4a0f-9021-81965c15341e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\game\engine">
+      <UniqueIdentifier>{3a6d010f-e0c6-4a90-a604-15f192505a99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\game\window">
+      <UniqueIdentifier>{102d3534-8f71-433a-83bb-62d661215664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\game\GObject">
+      <UniqueIdentifier>{5c33f04c-a67b-40bd-8269-8b802d9743cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\game\gabage">
+      <UniqueIdentifier>{2d4d5b31-e309-499f-9433-33fad8b06ea4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -132,6 +150,24 @@
     <ClCompile Include="FrameBuffer.cpp">
       <Filter>资源文件\advanced_opengl</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>资源文件\game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic.cpp">
+      <Filter>资源文件\game\GameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="GEngine.cpp">
+      <Filter>资源文件\game\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="GWin.cpp">
+      <Filter>资源文件\game\window</Filter>
+    </ClCompile>
+    <ClCompile Include="GRef.cpp">
+      <Filter>资源文件\game\GObject</Filter>
+    </ClCompile>
+    <ClCompile Include="AutoReleasePool.cpp">
+      <Filter>资源文件\game\gabage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -145,6 +181,21 @@
     </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>资源文件\model</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic.h">
+      <Filter>资源文件\game\GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="GEngine.h">
+      <Filter>资源文件\game\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="GWin.h">
+      <Filter>资源文件\game\window</Filter>
+    </ClInclude>
+    <ClInclude Include="GRef.h">
+      <Filter>资源文件\game\GObject</Filter>
+    </ClInclude>
+    <ClInclude Include="AutoReleasePool.h">
+      <Filter>资源文件\game\gabage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
