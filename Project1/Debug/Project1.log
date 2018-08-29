@@ -1,14 +1,14 @@
-<<<<<<< HEAD
-﻿  GEngine.cpp
+﻿  GScheduler.cpp
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\gscheduler.cpp(92): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\gscheduler.cpp(185): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\gscheduler.cpp(189): warning C4018: “<=”: 有符号/无符号不匹配
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\gscheduler.cpp(189): warning C4018: “>=”: 有符号/无符号不匹配
+c:\users\lijiayu01\documents\visual studio 2017\projects\project1\project1\gscheduler.cpp(192): warning C4018: “>”: 有符号/无符号不匹配
+  正在生成代码...
+  正在跳过...(未检测到相关更改)
+  Game.cpp
+  GRef.cpp
+  GEngine.cpp
+LINK : warning LNK4098: 默认库“MSVCRT”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
   Project1.vcxproj -> C:\Users\lijiayu01\documents\visual studio 2017\Projects\Project1\Debug\Project1.exe
   Project1.vcxproj -> C:\Users\lijiayu01\documents\visual studio 2017\Projects\Project1\Debug\Project1.pdb (Partial PDB)
-=======
-﻿  FrameBuffer.cpp
-c:\program1\opengl\shaderpg\project1\camera.h(54): warning C4305: “初始化”: 从“double”到“float”截断
-c:\program1\opengl\shaderpg\project1\framebuffer.cpp(38): warning C4305: “参数”: 从“double”到“float”截断
-c:\program1\opengl\shaderpg\project1\framebuffer.cpp(42): warning C4305: “参数”: 从“double”到“float”截断
-c:\program1\opengl\shaderpg\project1\framebuffer.cpp(46): warning C4305: “参数”: 从“double”到“float”截断
-c:\program1\opengl\shaderpg\project1\framebuffer.cpp(50): warning C4305: “参数”: 从“double”到“float”截断
-c:\program1\opengl\shaderpg\project1\framebuffer.cpp(234): warning C4305: “参数”: 从“double”到“GLfloat”截断
-  Project1.vcxproj -> C:\program1\opengl\ShaderPG\Debug\Project1.exe
->>>>>>> 06d5ae962fbe5199955fcad290122cc3381f17d0

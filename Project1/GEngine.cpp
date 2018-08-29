@@ -15,6 +15,7 @@ GEngine::GEngine()
 {
 	_gmWindows = new GWin(W_WIDTH, W_HEIGHT);
 	_rPool = new AutoReleasePool();
+	_scheduler = new GScheduler();
 }
 
 GEngine::~GEngine()
@@ -23,6 +24,8 @@ GEngine::~GEngine()
 	_gmWindows = nullptr;
 	delete _rPool;
 	_rPool = nullptr;
+	_scheduler->release();
+	_scheduler = nullptr;
 }
 
 void GEngine::run()
@@ -31,11 +34,13 @@ void GEngine::run()
 	ftime(&nowTime);
 	_lastTickTime = __int64(nowTime.time * 1000) + nowTime.millitm;
 	GLuint64 nowTickTime = 0;
+	double delta_time;
 	while (!_gmWindows->gWinShouldClose()) {
 		ftime(&nowTime);
 		nowTickTime = __int64(nowTime.time * 1000) + nowTime.millitm;
-		
+		delta_time = (nowTickTime - _lastTickTime) * 1.0 / 1000;
 		if (nowTickTime - _lastTickTime >= ONE_TICK_TIME) {
+			_scheduler->update(delta_time);
 			_rPool->clearGRefs();
 			_gmWindows->gWinPollEvents();
 			_lastTickTime = nowTickTime - nowTickTime % ONE_TICK_TIME; //保证_lastTickTime是oneTicktime的倍数

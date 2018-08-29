@@ -64,6 +64,12 @@
     <Filter Include="资源文件\game\gabage">
       <UniqueIdentifier>{2d4d5b31-e309-499f-9433-33fad8b06ea4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\game\scheduler">
+      <UniqueIdentifier>{66df2bb9-23ad-4ac1-af96-beef0f69081a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\game\GHash">
+      <UniqueIdentifier>{ab6dc1ba-4bbb-455c-b977-8fda8d6cee18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -168,6 +174,9 @@
     <ClCompile Include="AutoReleasePool.cpp">
       <Filter>资源文件\game\gabage</Filter>
     </ClCompile>
+    <ClCompile Include="GScheduler.cpp">
+      <Filter>资源文件\game\scheduler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -196,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="AutoReleasePool.h">
       <Filter>资源文件\game\gabage</Filter>
+    </ClInclude>
+    <ClInclude Include="GScheduler.h">
+      <Filter>资源文件\game\scheduler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

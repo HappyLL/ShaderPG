@@ -1,6 +1,7 @@
 #pragma once
 #include "GWin.h"
 #include "AutoReleasePool.h"
+#include "GScheduler.h"
 #define W_HEIGHT 600
 #define W_WIDTH  800
 class GEngine {
@@ -18,5 +19,6 @@ public:
 private:
 	GWin *_gmWindows;
 	AutoReleasePool * _rPool;
+	GScheduler * _scheduler;
 	GLuint64 _lastTickTime;
 };
