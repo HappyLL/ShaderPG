@@ -4,54 +4,186 @@
 GScheduler::GScheduler()
 {
 	_gtable = new GTimerHTable();
+	_updating = false;
+	_negPriorityList = new GProrityNode;
+	_posPriorityList = new GProrityNode;
+	_zeroPriorityList = new GProrityNode;
 }
 
 GScheduler::~GScheduler()
 {
 	_gtable->release();
 	_gtable = nullptr;
+	_updating = false;
+	_delList(_negPriorityList);
+	_delList(_posPriorityList);
+	_delList(_zeroPriorityList);
+	_negPriorityList = nullptr;
+	_posPriorityList = nullptr;
+	_zeroPriorityList = nullptr;
 }
 
-void GScheduler::gscheduler(SECHDULE_FUNC func, void * target)
+void GScheduler::gscheduler(SECHDULE_FUNC func, void * target, int priority)
 {
-	GTimerCallBack * timer_cb = _gtable->getElement(target);
-	if (timer_cb) {
+	if (!_updating) {
+		GTimerCallBack * timer_cb = _gtable->getElement(target);
+		if (timer_cb) {
+			timer_cb->pushFunc(func);
+			_priorityIn(timer_cb, priority, _gPList(priority));
+			return;
+		}
+		timer_cb = new GTimerCallBack(target);
 		timer_cb->pushFunc(func);
+		_gtable->addElement(target, timer_cb);
+		_priorityIn(timer_cb, priority, _gPList(priority));
 		return;
 	}
-	timer_cb = new GTimerCallBack(target);
-	timer_cb->pushFunc(func);
-	_gtable->addElement(target, timer_cb);
+	_pushDelayNode(target, func, priority);
 }
 
 void GScheduler::ungscheduler(void * target, SECHDULE_FUNC func)
 {
-	GTimerCallBack * timer_cb = _gtable->getElement(target);
-	if (!timer_cb) {
+	if (!_updating) {
+		GTimerCallBack * timer_cb = _gtable->getElement(target);
+		if (!timer_cb) {
+			return;
+		}
+		timer_cb->removeFunc(func);
+		if (timer_cb->emptyFuncs()) {
+			_priorityOut(timer_cb);
+			_gtable->removeElement(target);
+		}
 		return;
 	}
-	timer_cb->removeFunc(func);
-	if (timer_cb->emptyFuncs())
-		_gtable->removeElement(target);
+	_pushDelayNode(target, func, 1, 2);
 }
 
 void GScheduler::ungscheduler(void * target)
 {
-	GTimerCallBack * timer_cb = _gtable->getElement(target);
-	if (!timer_cb)
+	if (!_updating) {
+		GTimerCallBack * timer_cb = _gtable->getElement(target);
+		if (!timer_cb)
+			return;
+		_priorityOut(timer_cb);
+		_gtable->removeElement(target);
 		return;
-	_gtable->removeElement(target);
+	}
+	_pushDelayNode(target, nullptr, 1, 2);
 }
 
 void GScheduler::update(double dt)
 {
+	_updating = true;
 	_gtable->updateAllElements(dt);
+	_updating = false;
+	_addDelayElements();
+}
+
+void GScheduler::_priorityIn(GTimerCallBack * timer, int priority, GProrityNode *pList)
+{
+	GProrityNode* _pnode = timer->getPriorityNode();
+	if (!_pnode) {
+		_pnode = new GProrityNode();
+		_pnode->timer = timer;
+		_pnode->next = pList->next;
+		if(pList->next)
+			pList->next->pre = _pnode;
+		pList->next = _pnode;
+		_pnode->pre = pList;
+	}
+	_pnode->priority = priority;
+	while (true) {
+		auto pre_node = _pnode->pre;
+		if (!pre_node->pre)
+			break;
+		if (pre_node->priority > _pnode->priority) {
+			pre_node->pre->next = _pnode;
+			_pnode->pre = pre_node->pre;
+			pre_node->next = _pnode->next;
+			if (_pnode->next)
+				_pnode->next->pre = pre_node;
+			pre_node->pre = _pnode;
+			_pnode->next = pre_node;
+		}
+		else
+			break;
+	}
+	while (true) {
+		auto next_node = _pnode->next;
+		if (!next_node)
+			break;
+		if (_pnode->priority > next_node->priority) {
+			_pnode->pre->next = next_node;
+			next_node->pre = _pnode->pre;
+			_pnode->next = next_node->next;
+			if (next_node->next)
+				next_node->next->pre = _pnode;
+			_pnode->pre = next_node;
+		}
+
+	}
+
+}
+
+void GScheduler::_priorityOut(GTimerCallBack * timer)
+{
+	auto _priorityNode = timer->getPriorityNode();
+	_priorityNode->pre->next = _priorityNode->next;
+	if (_priorityNode->next)
+		_priorityNode->next->pre = _priorityNode->pre;
+	delete _priorityNode;
+}
+
+void GScheduler::_delList(GProrityNode * pList)
+{
+	GProrityNode *cur = pList;
+	GProrityNode * next = nullptr;
+	while (cur) {
+		next = cur->next;
+		delete cur;
+		cur = next;
+	}
+}
+
+void GScheduler::_pushDelayNode(void * target, SECHDULE_FUNC func, int priority, int op)
+{
+	GDelayNode delayNode;
+	delayNode.target = target;
+	delayNode.func = func;
+	delayNode.priority = priority;
+	delayNode.op = op;
+	_opDelayNodes.push_back(target);
+}
+
+void GScheduler::_addDelayElements()
+{
+	for (auto delayNode : _opDelayNodes) {
+		if (delayNode.op == 1) {
+			gscheduler(delayNode.func, delayNode.target, delayNode.priority);
+		}
+		else if(delayNode.func){
+			ungscheduler(delayNode.target, delayNode.func);
+		}
+		else
+			ungscheduler(delayNode.target);
+	}
+	_opDelayNodes.clear();
+}
+
+GProrityNode* GScheduler::_gPList(int priority)
+{
+	if (priority < 0)
+		return _negPriorityList;
+	if (priority == 0)
+		return _zeroPriorityList;
+	return _posPriorityList;
 }
 
 GTimerCallBack::GTimerCallBack(void *target)
 {
 	_target = target;
 	_next = -1;
+	_prority_node = nullptr;
 }
 
 GTimerCallBack::~GTimerCallBack()
@@ -248,4 +380,17 @@ void GTimer::trigger(double dt)
 bool GTimer::isEqual(SECHDULE_FUNC func)
 {
 	return (&_func) == (&func);
+}
+
+GProrityNode::GProrityNode()
+{
+	next = nullptr;
+	timer = nullptr;
+	pre = nullptr;
+}
+
+GProrityNode::~GProrityNode()
+{
+	next = nullptr;
+	timer = nullptr;
 }
