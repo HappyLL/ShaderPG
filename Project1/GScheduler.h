@@ -5,6 +5,20 @@
 typedef std::function<void(double dt)> SECHDULE_FUNC;
 #define hashpointer(pointer) (size_t)(pointer)
 
+class GTimerCallBack;
+class GDelayNode;
+
+class GProrityNode {
+public:
+	GProrityNode();
+	~GProrityNode();
+public:
+	GProrityNode *next;
+	GProrityNode *pre;
+	GTimerCallBack * timer;
+	int priority;
+};
+
 class GTimer : public GRef {
 public:
 	GTimer(SECHDULE_FUNC func);
@@ -54,17 +68,6 @@ private:
 	size_t _tsize;
 	GTimerCallBack ** _htable;
 	size_t _lastFreeIndex;
-};
-
-class GProrityNode{
-public:
-	GProrityNode();
-	~GProrityNode();
-public:
-	GProrityNode *next;
-	GProrityNode *pre;
-	GTimerCallBack * timer;
-	int priority;
 };
 
 class GDelayNode {

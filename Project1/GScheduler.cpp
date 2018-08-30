@@ -152,7 +152,7 @@ void GScheduler::_pushDelayNode(void * target, SECHDULE_FUNC func, int priority,
 	delayNode.func = func;
 	delayNode.priority = priority;
 	delayNode.op = op;
-	_opDelayNodes.push_back(target);
+	_opDelayNodes.push_back(delayNode);
 }
 
 void GScheduler::_addDelayElements()
@@ -220,7 +220,7 @@ void GTimerCallBack::removeFunc(SECHDULE_FUNC func)
 
 GTimerHTable::GTimerHTable()
 {
-	_tsize = 2;
+	_tsize = 1;
 	_htable = new GTimerCallBack*[_tsize];
 	for (int i = 0; i < _tsize; ++i)
 		_htable[i] = nullptr;
@@ -306,9 +306,16 @@ GTimerCallBack * GTimerHTable::getElement(void * target)
 
 int GTimerHTable::_getFreeKey()
 {
-	for (; _lastFreeIndex < _tsize; ++_lastFreeIndex)
-		if (!_htable[_lastFreeIndex])
-			return _lastFreeIndex;
+	int _sIndex = _lastFreeIndex;
+	while (true) {
+		if (!_htable[_sIndex]) {
+			_lastFreeIndex = _sIndex;
+			return _sIndex;
+		}
+		_sIndex = (_sIndex + 1) % _tsize;
+		if (_sIndex == _lastFreeIndex)
+			return -1;
+	}
 	return -1;
 }
 
@@ -355,6 +362,8 @@ int GTimerHTable::_getHashKey(void * target)
 {
 	size_t hashkey = hashpointer(target) % _tsize;
 	while (hashkey != -1) {
+		if (!_htable[hashkey])
+			return -1;
 		if (_htable[hashkey]->isEqual(target))
 			return hashkey;
 		hashkey = _htable[hashkey]->getNext();

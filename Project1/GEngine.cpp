@@ -16,6 +16,8 @@ GEngine::GEngine()
 	_gmWindows = new GWin(W_WIDTH, W_HEIGHT);
 	_rPool = new AutoReleasePool();
 	_scheduler = new GScheduler();
+	_gmLogic = new GameLogic();
+	//_scheduler->gscheduler([=](double dt) {_gmLogic->update(dt); }, _gmLogic, -100);
 }
 
 GEngine::~GEngine()
@@ -26,6 +28,8 @@ GEngine::~GEngine()
 	_rPool = nullptr;
 	_scheduler->release();
 	_scheduler = nullptr;
+	_gmLogic->release();
+	_gmLogic = nullptr;
 }
 
 void GEngine::run()

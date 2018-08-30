@@ -2,6 +2,7 @@
 #include "GWin.h"
 #include "AutoReleasePool.h"
 #include "GScheduler.h"
+#include "GameLogic.h"
 #define W_HEIGHT 600
 #define W_WIDTH  800
 class GEngine {
@@ -20,5 +21,7 @@ private:
 	GWin *_gmWindows;
 	AutoReleasePool * _rPool;
 	GScheduler * _scheduler;
+	GameLogic * _gmLogic;
+
 	GLuint64 _lastTickTime;
 };
