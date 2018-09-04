@@ -62,8 +62,10 @@ public:
 	void addElement(void *target, GTimerCallBack * element);
 	void removeElement(void *target);
 private:
+	int _hposition(void *target);
 	void _rehash();
 	int _getHashKey(void *target);
+	void _addElement(void *target, GTimerCallBack * element);
 private:
 	size_t _tsize;
 	GTimerCallBack ** _htable;

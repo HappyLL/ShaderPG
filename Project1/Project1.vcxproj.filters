@@ -70,6 +70,9 @@
     <Filter Include="资源文件\game\GHash">
       <UniqueIdentifier>{ab6dc1ba-4bbb-455c-b977-8fda8d6cee18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\game\GRender">
+      <UniqueIdentifier>{6dc9875b-276e-469f-90a4-81644308a9b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -177,6 +180,9 @@
     <ClCompile Include="GScheduler.cpp">
       <Filter>资源文件\game\scheduler</Filter>
     </ClCompile>
+    <ClCompile Include="GRender.cpp">
+      <Filter>资源文件\game\GRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -208,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="GScheduler.h">
       <Filter>资源文件\game\scheduler</Filter>
+    </ClInclude>
+    <ClInclude Include="GRender.h">
+      <Filter>资源文件\game\GRender</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

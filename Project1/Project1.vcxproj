@@ -160,6 +160,7 @@
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="GEngine.cpp" />
     <ClCompile Include="GRef.cpp" />
+    <ClCompile Include="GRender.cpp" />
     <ClCompile Include="GScheduler.cpp" />
     <ClCompile Include="GWin.cpp" />
     <ClCompile Include="lighting_casters.cpp">
@@ -229,6 +230,7 @@
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GEngine.h" />
     <ClInclude Include="GRef.h" />
+    <ClInclude Include="GRender.h" />
     <ClInclude Include="GScheduler.h" />
     <ClInclude Include="GWin.h" />
     <ClInclude Include="Mesh.h" />

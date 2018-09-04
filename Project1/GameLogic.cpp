@@ -15,5 +15,5 @@ void GameLogic::run()
 }
 
 void GameLogic::update(double dt) {
-	std::cout << "[GameLogic][update] dt is " << dt << std::endl;
+	//std::cout << "[GameLogic][update] dt is " << dt << std::endl;
 }

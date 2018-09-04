@@ -1,5 +1,6 @@
 #include "GScheduler.h"
 #include <iostream>
+#include <cmath>
 
 GScheduler::GScheduler()
 {
@@ -120,7 +121,8 @@ void GScheduler::_priorityIn(GTimerCallBack * timer, int priority, GProrityNode 
 				next_node->next->pre = _pnode;
 			_pnode->pre = next_node;
 		}
-
+		else
+			break;
 	}
 
 }
@@ -235,10 +237,15 @@ GTimerHTable::~GTimerHTable()
 void GTimerHTable::addElement(void* target, GTimerCallBack * element)
 {
 	_rehash();
-	size_t hashkey = hashpointer(target) % _tsize;
+	_addElement(target, element);
+}
+
+void GTimerHTable::_addElement(void* target, GTimerCallBack *element){
+	size_t hashkey = _hposition(target);
 	if (_htable[hashkey] != nullptr) {
 		// 说明有冲突
-		size_t _thashkey = hashpointer(_htable[hashkey]->getTarget()) % _tsize;
+		size_t _thashkey = _hposition(_htable[hashkey]->getTarget());
+		//std::cout << "new hash key is " << _thashkey << std::endl;
 		if (_thashkey != hashkey) {
 			// 说明目标的hashkey也是冲突节点
 			GTimerCallBack *_tElement = _htable[_thashkey];
@@ -266,7 +273,7 @@ void GTimerHTable::addElement(void* target, GTimerCallBack * element)
 
 void GTimerHTable::removeElement(void *target)
 {
-	int hashkey = hashpointer(target) % _tsize;
+	int hashkey = _hposition(target);
 	int pre = -1;
 	int cur = hashkey;
 	while (cur != -1) {
@@ -327,40 +334,57 @@ void GTimerHTable::updateAllElements(double dt)
 		_htable[index]->update(dt);
 	}
 }
-
+int cnt = 0;
+int GTimerHTable::_hposition(void * target)
+{
+	int hpos = hashpointer(target) % (_tsize|1);
+	if (hpos == _tsize)
+		hpos >>= 1;
+	return hpos;
+}
 void GTimerHTable::_rehash()
 {
 	int ne_num = 0;
+	int max_ne_num = 0;
 	for (int index = 0; index < _tsize; ++index) {
-		if (_htable[index])
+		if (_htable[index]) {
 			ne_num++;
+		}
+		else {
+			max_ne_num = max_ne_num < ne_num ? ne_num : max_ne_num;
+			ne_num = 0;
+		}
 	}
-	if ((ne_num << 1) <= _tsize && (ne_num >= (_tsize >> 1)))
+	max_ne_num = max_ne_num < ne_num ? ne_num : max_ne_num;
+	if ((max_ne_num << 1)<= _tsize && (_tsize - max_ne_num >= (_tsize >> 1)))
 		return;
 	int new_size = 1;
-	if ((ne_num << 1) > _tsize)
-		new_size = _tsize >> 1;
+	if ((max_ne_num << 1) > _tsize)
+		new_size = (_tsize << 1);
 	else
-		new_size = _tsize << 1;
-	std::cout << "GTimerHandle _rehash size is " << new_size<<std::endl;
+		new_size = _tsize >> 1;
+	cnt++;
+	std::cout << "GTimerHandle _rehash size is " << new_size <<" "<< cnt <<std::endl;
 	GTimerCallBack ** newHtable = new GTimerCallBack*[new_size];
 	for (int index = 0; index < new_size; ++index)
 		newHtable[index] = nullptr;
 	GTimerCallBack ** oldHTable = _htable;
 	_htable = newHtable;
 	_lastFreeIndex = 0;
+	int o_size = _tsize;
 	_tsize = new_size;
-	for (int index = 0; index < new_size; ++index) {
+	for (int index = 0; index < o_size; ++index) {
 		if (!oldHTable[index])
 			continue;
-		addElement(oldHTable[index]->getTarget(), oldHTable[index]);
+		oldHTable[index]->setNext(-1);
+		_addElement(oldHTable[index]->getTarget(), oldHTable[index]);
 	}
 	delete[]oldHTable;
 }
 
 int GTimerHTable::_getHashKey(void * target)
 {
-	size_t hashkey = hashpointer(target) % _tsize;
+	int hashkey = _hposition(target);
 	while (hashkey != -1) {
 		if (!_htable[hashkey])
 			return -1;

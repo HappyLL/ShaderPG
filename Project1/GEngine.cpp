@@ -17,7 +17,6 @@ GEngine::GEngine()
 	_rPool = new AutoReleasePool();
 	_scheduler = new GScheduler();
 	_gmLogic = new GameLogic();
-	//_scheduler->gscheduler([=](double dt) {_gmLogic->update(dt); }, _gmLogic, -100);
 }
 
 GEngine::~GEngine()
