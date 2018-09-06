@@ -7,3 +7,7 @@ GRender::GRender()
 GRender::~GRender()
 {
 }
+
+void GRender::render()
+{
+}

@@ -73,6 +73,9 @@
     <Filter Include="资源文件\game\GRender">
       <UniqueIdentifier>{6dc9875b-276e-469f-90a4-81644308a9b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\game\GRenderCommand">
+      <UniqueIdentifier>{183d291d-bd83-428b-b332-19a48efa2079}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

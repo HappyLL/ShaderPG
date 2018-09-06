@@ -3,6 +3,7 @@
 #include "AutoReleasePool.h"
 #include "GScheduler.h"
 #include "GameLogic.h"
+#include "GRender.h"
 #define W_HEIGHT 600
 #define W_WIDTH  800
 class GEngine {
@@ -22,6 +23,7 @@ private:
 	AutoReleasePool * _rPool;
 	GScheduler * _scheduler;
 	GameLogic * _gmLogic;
+	GRender * _grender;
 
 	GLuint64 _lastTickTime;
 };

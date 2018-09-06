@@ -5,5 +5,5 @@ public:
 	GRender();
 	~GRender();
 public:
-
+	void render();
 };

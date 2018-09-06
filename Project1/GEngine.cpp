@@ -17,6 +17,7 @@ GEngine::GEngine()
 	_rPool = new AutoReleasePool();
 	_scheduler = new GScheduler();
 	_gmLogic = new GameLogic();
+	_grender = new GRender();
 }
 
 GEngine::~GEngine()
@@ -29,6 +30,8 @@ GEngine::~GEngine()
 	_scheduler = nullptr;
 	_gmLogic->release();
 	_gmLogic = nullptr;
+	_grender->release();
+	_grender = nullptr;
 }
 
 void GEngine::run()
@@ -44,6 +47,7 @@ void GEngine::run()
 		delta_time = (nowTickTime - _lastTickTime) * 1.0 / 1000;
 		if (nowTickTime - _lastTickTime >= ONE_TICK_TIME) {
 			_scheduler->update(delta_time);
+			_grender->render();
 			_rPool->clearGRefs();
 			_gmWindows->gWinPollEvents();
 			_lastTickTime = nowTickTime - nowTickTime % ONE_TICK_TIME; //保证_lastTickTime是oneTicktime的倍数
