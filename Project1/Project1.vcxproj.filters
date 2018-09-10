@@ -25,9 +25,6 @@
     <Filter Include="资源文件\shader_mgr">
       <UniqueIdentifier>{8cc711e2-0ce3-4517-bc92-7328c1ce3906}</UniqueIdentifier>
     </Filter>
-    <Filter Include="资源文件\shader_res">
-      <UniqueIdentifier>{65657477-7f6f-4d8c-9afb-b8f4590e3b37}</UniqueIdentifier>
-    </Filter>
     <Filter Include="资源文件\transform">
       <UniqueIdentifier>{626e59aa-121e-46dc-9a2a-1508458e97fb}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,12 @@
     </Filter>
     <Filter Include="资源文件\game\GRenderCommand">
       <UniqueIdentifier>{183d291d-bd83-428b-b332-19a48efa2079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\shader_mgr\shader_res">
+      <UniqueIdentifier>{65657477-7f6f-4d8c-9afb-b8f4590e3b37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\game\GRenderCommand\GUI">
+      <UniqueIdentifier>{704618ce-ebcb-48f8-a72a-08f416cf90d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +189,18 @@
     <ClCompile Include="GRender.cpp">
       <Filter>资源文件\game\GRender</Filter>
     </ClCompile>
+    <ClCompile Include="RenderCommand.cpp">
+      <Filter>资源文件\game\GRenderCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="TriangleCommand.cpp">
+      <Filter>资源文件\game\GRenderCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="GNode.cpp">
+      <Filter>资源文件\game\GRenderCommand\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GSprite.cpp">
+      <Filter>资源文件\game\GRenderCommand\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -221,117 +236,129 @@
     <ClInclude Include="GRender.h">
       <Filter>资源文件\game\GRender</Filter>
     </ClInclude>
+    <ClInclude Include="RenderCommand.h">
+      <Filter>资源文件\game\GRenderCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangleCommand.h">
+      <Filter>资源文件\game\GRenderCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="GNode.h">
+      <Filter>资源文件\game\GRenderCommand\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GSprite.h">
+      <Filter>资源文件\game\GRenderCommand\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="sample_vertex.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="sample_frag.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="transform.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="transform.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="color_light.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="color_light.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="color_light_l.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="color_light_l.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="basic_color_light.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="basic_color_light.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="camera_light_test.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="camera_light_test.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="camera_light_test_light.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="camera_light_test_light.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="camera_light_test_1.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="camera_light_test_1.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="light_materials.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="light_materials.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="lighting_map.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="lighting_map.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="lighting_caster.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="model_test.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="model_test.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="depth_test_cube.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="depth_test_cube.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="depth_test_plane.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="depth_test_plane.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="stencil_test_outline.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="stencil_test_outline.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="blend_vs.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="blend_fs.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="blend_discard_cube.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="blend_discard_cube.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="fb_cube.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
     <None Include="fb_cube.fs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="lighting_caster.vs">
-      <Filter>资源文件\shader_res</Filter>
+      <Filter>资源文件\shader_mgr\shader_res</Filter>
     </Text>
   </ItemGroup>
 </Project>

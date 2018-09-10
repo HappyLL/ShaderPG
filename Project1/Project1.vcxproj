@@ -159,9 +159,11 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="GEngine.cpp" />
+    <ClCompile Include="GNode.cpp" />
     <ClCompile Include="GRef.cpp" />
     <ClCompile Include="GRender.cpp" />
     <ClCompile Include="GScheduler.cpp" />
+    <ClCompile Include="GSprite.cpp" />
     <ClCompile Include="GWin.cpp" />
     <ClCompile Include="lighting_casters.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -195,6 +197,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="RenderCommand.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="shader_s.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -215,6 +218,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="TriangleCommand.cpp" />
     <ClCompile Include="tri_test2.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -229,15 +233,19 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GEngine.h" />
+    <ClInclude Include="GNode.h" />
     <ClInclude Include="GRef.h" />
     <ClInclude Include="GRender.h" />
     <ClInclude Include="GScheduler.h" />
+    <ClInclude Include="GSprite.h" />
     <ClInclude Include="GWin.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="RenderCommand.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="TriangleCommand.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="basic_color_light.fs" />
