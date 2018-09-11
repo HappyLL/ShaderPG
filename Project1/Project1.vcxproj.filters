@@ -79,6 +79,9 @@
     <Filter Include="资源文件\game\GRenderCommand\GUI">
       <UniqueIdentifier>{704618ce-ebcb-48f8-a72a-08f416cf90d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="资源文件\game\Helper">
+      <UniqueIdentifier>{f4d347ef-ddb2-42f9-ab2b-3d55863453fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -201,6 +204,9 @@
     <ClCompile Include="GSprite.cpp">
       <Filter>资源文件\game\GRenderCommand\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="InputHelper.cpp">
+      <Filter>资源文件\game\Helper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -247,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="GSprite.h">
       <Filter>资源文件\game\GRenderCommand\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHelper.h">
+      <Filter>资源文件\game\Helper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

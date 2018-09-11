@@ -46,10 +46,13 @@ void GEngine::run()
 		nowTickTime = __int64(nowTime.time * 1000) + nowTime.millitm;
 		delta_time = (nowTickTime - _lastTickTime) * 1.0 / 1000;
 		if (nowTickTime - _lastTickTime >= ONE_TICK_TIME) {
+			_gmWindows->gInputProcess();
 			_scheduler->update(delta_time);
+			_gmWindows->update(delta_time);
 			_grender->render();
-			_rPool->clearGRefs();
+			_gmWindows->gWinSwapBuffers();
 			_gmWindows->gWinPollEvents();
+			_rPool->clearGRefs();
 			_lastTickTime = nowTickTime - nowTickTime % ONE_TICK_TIME; //保证_lastTickTime是oneTicktime的倍数
 			continue;
 		}

@@ -165,6 +165,7 @@
     <ClCompile Include="GScheduler.cpp" />
     <ClCompile Include="GSprite.cpp" />
     <ClCompile Include="GWin.cpp" />
+    <ClCompile Include="InputHelper.cpp" />
     <ClCompile Include="lighting_casters.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -239,6 +240,7 @@
     <ClInclude Include="GScheduler.h" />
     <ClInclude Include="GSprite.h" />
     <ClInclude Include="GWin.h" />
+    <ClInclude Include="InputHelper.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

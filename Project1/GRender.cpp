@@ -99,7 +99,7 @@ void GRender::_drawBatchTriangles(RenderCommnad *cmd)
 
 void GRender::_clearCommands()
 {
-	_render_queue->
+	_render_queue->clearCommands();
 }
 
 RenderQueue::RenderQueue(size_t render_id)
